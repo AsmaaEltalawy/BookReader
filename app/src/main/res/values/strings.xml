@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BookReader</string>
+    <string name="enter">Enter</string>
+    <string name="home">Home</string>
+    <string name="library">Library\n</string>
+    <string name="search">Search\n</string>
+    <string name="Profile">Profile\n</string>
+    <string name="Darkmode">Dark mode\n</string>
+    <string name="Change_language">Change language\n</string>
+    <string name="contact">Contact us\n</string>
+    <string name="Booked">BOOKED\n</string>
+</resources>
