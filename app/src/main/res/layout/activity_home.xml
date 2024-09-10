@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Home">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="234dp"
+            android:layout_height="186dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <com.google.android.material.card.MaterialCardView
+        android:elevation="20dp"
+            android:id="@+id/materialCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:backgroundTint="@color/pink"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.137">
+
+            <Button
+                android:id="@+id/enterBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="50dp"
+                android:background="@drawable/corners"
+                android:backgroundTint="@color/softblue"
+                android:padding="20dp"
+                android:text="@string/enter"
+                android:textSize="20sp">
+            </Button>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="190dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="528dp"
+            android:layout_marginRight="280dp"
+            android:src="@drawable/shape1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="77dp"
+            android:layout_marginRight="220dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/shape2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="122dp"
+            android:src="@drawable/shape4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

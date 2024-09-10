@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.example.bookreader.Home_fragment"
+        android:label="Home_fragment" />
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.bookreader.Search_Fragment"
+        android:label="Search_Fragment" />
+    <fragment
+        android:id="@+id/browse"
+        android:name="com.example.bookreader.LibraryFragment"
+        android:label="Browse_Fragment" />
+</navigation>
