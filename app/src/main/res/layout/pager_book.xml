@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="book"
+            type="com.example.bookreader.data.models.DetailsResponse" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+
+            android:id="@+id/recListBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_12"
+            android:elevation="@dimen/elevation_25"
+            app:cardCornerRadius="@dimen/radius_30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/pagerIG"
+                    android:layout_width="@dimen/width_200dp"
+                    android:layout_height="@dimen/height_350"
+                    android:contentDescription="@string/cover"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/pagerTV"
+                    android:layout_width="@dimen/width_200dp"
+                    android:layout_height="@dimen/match_constraints"
+                    android:background="@color/dimmed"
+                    android:maxLines="20"
+                    android:ellipsize="end"
+                    android:maxHeight="@dimen/height_350"
+                    android:padding="@dimen/padding_16"
+                    android:scrollbars="vertical"
+                    android:textSize="@dimen/text_20"
+                    android:text="@{book.description}"
+                    android:textColor="@color/tertiary_text"
+                    android:visibility="gone" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <ImageButton
+            android:id="@+id/infoButton"
+            android:contentDescription="@string/details"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/info"
+            android:backgroundTint="@color/main_text"
+            app:layout_constraintStart_toEndOf="@id/recListBook"
+            app:layout_constraintBottom_toBottomOf="@id/recListBook"
+            android:layout_margin="@dimen/margin_12"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

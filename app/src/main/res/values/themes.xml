@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.BookReader"  parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge" />
+    <style name="Theme.BookReader" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="android:statusBarColor">@color/primary_color</item>
+        <!-- Optional: To make status bar icons and text dark (on light status bar color) -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>

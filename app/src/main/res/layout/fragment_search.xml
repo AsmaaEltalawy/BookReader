@@ -1,44 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <SearchView
-            android:layout_margin="@dimen/_30sp"
-           android:background="@drawable/corners"
-            android:elevation="@dimen/_10dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </SearchView>
+            android:layout_height="match_parent"
+            android:background="@color/theme">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="500dp"
+                android:backgroundTint="@color/primary_color"
+                android:layout_marginTop="@dimen/margin_20"
+                app:cardCornerRadius="@dimen/radius_30"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            android:src="@drawable/blue2"
-            app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintLeft_toLeftOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        </ImageView>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="200dp"
-            android:src="@drawable/blue1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+                    <SearchView
+                        android:id="@+id/searchView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_20"
+                        android:background="@drawable/corners"
+                        android:queryBackground="@android:color/transparent"
+                        android:elevation="@dimen/_10dp"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="@string/search_hint"
+                        app:layout_constraintBottom_toTopOf="@id/recentSearchTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/recentSearchTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:text="@string/searches"
+                        android:textColor="@color/main_text"
+                        android:textSize="@dimen/text_20"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/recentSearchesRV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/searchView" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recentSearchesRV"
+                        android:layout_width="0dp"
+                        android:paddingVertical="@dimen/_10dp"
+                        tools:listitem="@layout/recent_search_item"
+                        android:layout_height="0dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_marginHorizontal="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/margin_20"
+                        android:padding="@dimen/padding_12"
+                        app:layout_constraintBottom_toTopOf="@id/searchBT"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/recentSearchTV" />
+
+                    <Button
+                        android:id="@+id/searchBT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/margin_20"
+                        android:background="@drawable/searchbt"
+                        android:includeFontPadding="false"
+                        android:text="@string/search"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/main_text"
+                        android:textSize="@dimen/text_16"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="130dp"
+                android:src="@drawable/blue2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="250dp"
+                android:src="@drawable/blue1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.12"
 
 }
 
@@ -42,6 +43,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
         compose = true
     }
     composeOptions {
@@ -82,4 +84,33 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    val room_version = "2.6.1"
+    //room
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    //coroutines
+    implementation("androidx.room:room-ktx:$room_version")
+    //material design
+    implementation("com.google.android.material:material:1.12.0")
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //moshi
+    implementation("com.squareup.moshi:moshi:1.15.1")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3") // Or latest version
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    val lifecycleVersion = "2.8.4"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
+    //expandable view
+    implementation("com.ms-square:expandableTextView:0.1.4")
 }

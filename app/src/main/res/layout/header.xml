@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="220dp"
+    android:backgroundTint="@color/theme"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    >
-
-    <com.google.android.material.card.MaterialCardView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-       android:backgroundTint="@color/pink"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/drawer_corners"
+        android:contentDescription="@string/avatar"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:scaleType="fitXY" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/drawer_headerTV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/match_constraints"
             android:layout_marginTop="30dp"
             android:text="@string/Booked"
             android:textColor="@color/black"
             android:textSize="25sp"
-            android:layout_marginStart="80dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            android:letterSpacing="0.4"
+            app:layout_constraintBottom_toTopOf="@+id/avatarIV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -34,19 +39,18 @@
         </TextView>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/avatarIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        android:layout_marginStart="75sp"
-            android:layout_marginTop="152dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/margin_20"
             android:src="@drawable/profile"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/drawer_headerTV">
 
         </ImageView>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -9,10 +9,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/theme"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Home">
+        tools:context=".ui.theme.views.activities.LoginActivity">
 
         <ImageView
             android:id="@+id/imageView"
