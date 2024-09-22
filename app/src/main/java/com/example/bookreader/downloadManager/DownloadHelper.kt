@@ -26,6 +26,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.Serializable
 
 class DownloadHelper(private val context: Context) {
 
@@ -33,18 +34,16 @@ class DownloadHelper(private val context: Context) {
     private val job = Job()
     private val downloadScope = CoroutineScope(Dispatchers.IO + job)
 
-    private lateinit var book: DetailsResponse // WRONG on SO MANY LEVELS
-
     private var downloadId: Long = 0
     private val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     // Method to start the download
-    fun startDownload(book: DetailsResponse, app: Application) : Boolean{
+    fun startDownload(book: DetailsResponse, app: Application): Boolean {
         var isDone = false
         val bookUrl = book.download
         val bookTitle = book.title
         this.app = app
-        this.book = book
+
         val request = DownloadManager.Request(Uri.parse(bookUrl))
             .setTitle(bookTitle)
             .setDescription("Downloading...")
@@ -56,24 +55,31 @@ class DownloadHelper(private val context: Context) {
 
         val filePath = getDownloadedFilePath(downloadId)
 
-        // Register BroadcastReceiver to listen when download completes
+        // Create intent and pass the book object to the BroadcastReceiver
+        val intent = Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        intent.putExtra("book", book as Serializable)
+
+        // Register the BroadcastReceiver with the intent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_NOT_EXPORTED)
         } else {
             context.registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         }
+
         downloadScope.launch {
-            updateDatabaseWithFilePath(book,filePath?:"" ,downloadId,app)
+            updateDatabaseWithFilePath(book, filePath ?: "", downloadId, app)
             isDone = true
         }
         return isDone
     }
+
 
     // BroadcastReceiver to handle completion
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (id == downloadId) {
+                val book = intent.getSerializableExtra("book") as DetailsResponse
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 val cursor: Cursor = downloadManager.query(query)
 
@@ -86,23 +92,20 @@ class DownloadHelper(private val context: Context) {
 
                         when (status) {
                             DownloadManager.STATUS_SUCCESSFUL -> {
-                                // Download completed, save status and file path to database
                                 downloadScope.launch {
-                                    updateDatabaseWithFilePath(book, filePath?:"", downloadId, app)
-                                    Log.d("delete from downloads", " downloaded Book: $book")
+                                    updateDatabaseWithFilePath(book, filePath ?: "", downloadId, app)
                                 }
                                 Toast.makeText(context.applicationContext, "Download completed: $filePath", Toast.LENGTH_LONG).show()
                             }
 
                             DownloadManager.STATUS_FAILED -> {
-                                // Download failed, get reason and remove entry from database
                                 val reasonIndex = cursor.getColumnIndex(DownloadManager.COLUMN_REASON)
                                 val reason = if (reasonIndex >= 0) cursor.getInt(reasonIndex) else -1
-                                // Remove failed download from the database
+
                                 downloadScope.launch {
-                                    removeFailedDownloadFromDatabase(book, filePath?:"", app)
+                                    removeFailedDownloadFromDatabase(book, filePath ?: "", app)
                                 }
-                                // Display notification with failure reason
+
                                 val reasonText = getFailureReasonText(reason)
                                 showFailureNotification(reasonText)
                             }
@@ -113,6 +116,8 @@ class DownloadHelper(private val context: Context) {
             }
         }
     }
+
+
 
     private fun getFailureReasonText(reason: Int): String {
         return when (reason) {
