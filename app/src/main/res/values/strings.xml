@@ -36,4 +36,21 @@ proident</string>
     <string name="title_dial">oops, something went wrong</string>
     <string name="description_dial">we can\'t open the file because of some error, please make sure the book is downloaded</string>
     <string name="ok">ok</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="user_name">User Name</string>
+    <string name="i_have_an_account">I have an account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="new_password">New Password</string>
+    <string name="this_field_can_t_be_empty">This Field can\'t be empty</string>
+    <string name="field_not_valid">Field Not Valid</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="changed_password_failed">Changed Password Failed</string>
+    <string name="email_or_password_incorrect">email or password incorrect</string>
+    <string name="confirm">Confirm</string>
+    <string name="reseat_password">Reseat Password</string>
 </resources>
