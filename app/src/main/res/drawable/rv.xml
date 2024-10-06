@@ -5,6 +5,7 @@
         android:width="@dimen/stroke_4" />
     <corners
         android:radius="@dimen/radius_30" />
+    <solid android:color="@color/theme"/>
 
 
 </shape>

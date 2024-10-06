@@ -9,4 +9,4 @@ data class RecentSearches (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var query: String = ""
-    ) : Serializable
+    )

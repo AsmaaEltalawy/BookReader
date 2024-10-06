@@ -22,7 +22,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+                <ProgressBar
+                    android:id="@+id/searchResultsProgressBar"
+                    android:layout_margin="@dimen/margin_4"
+                    android:layout_width="32dp"
+                    android:layout_height="@dimen/height_350"
+                    android:indeterminateTint="@color/black"
+                    android:indeterminate="true"
+                    android:visibility="visible"
+                    />
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResultsRV"
                 android:layout_width="match_parent"

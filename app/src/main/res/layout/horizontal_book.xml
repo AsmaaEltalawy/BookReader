@@ -5,7 +5,7 @@
     <data>
         <variable
             name="book"
-            type="com.example.bookreader.data.models.DetailsResponse" />
+            type="com.example.bookreader.data.models.LocalBook" />
 
     </data>
 

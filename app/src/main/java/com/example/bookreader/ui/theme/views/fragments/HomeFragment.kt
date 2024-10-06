@@ -24,46 +24,48 @@ import com.example.bookreader.adapter.BookAdapter
 import com.example.bookreader.adapter.BookOnClickListener
 import com.example.bookreader.adapter.InfinitePagerAdapter
 import com.example.bookreader.adapter.PagerOnClickListener
-import com.example.bookreader.data.models.DetailsResponse
-import com.example.bookreader.databinding.HomeFragmentBinding
+import com.example.bookreader.data.models.LocalBook
+import com.example.bookreader.data.models.SharedData
+import com.example.bookreader.databinding.FragmentHomeBinding
 import com.example.bookreader.databinding.PagerBookBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
-import kotlinx.coroutines.launch
-import kotlin.math.abs
 import com.example.bookreader.ui.theme.views.activities.DetailsActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.math.abs
 
 
 class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
+
     private var isAutoScrollActive = true
     lateinit var handler: Handler
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var viewPager2: ViewPager2
-    private val testData = mutableListOf<DetailsResponse>()
-    private lateinit var recentBooks: List<DetailsResponse>
-    private lateinit var recommendedBooks: MutableList<DetailsResponse>
-    private var lastPosition: Int = 0
     private val homeViewModel: HomeViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        testData.add(
-            DetailsResponse(
-                image = "https://hips.hearstapps.com/hmg-prod/images/wisteria-in-bloom-royalty-free-image-1653423554.jpg",
-                title = "five",
-                description = getString(R.string.lorem_ipsum)
-            )
+        //https://hips.hearstapps.com/hmg-prod/images/wisteria-in-bloom-royalty-free-image-1653423554.jpg
+        //getString(R.string.lorem_ipsum)
+        binding.recentBook = LocalBook(
+            id = "",
+            image = "",
+            title = "",
+            description = ""
         )
 
         viewPager2 = binding.viewpager2
         handler = Handler(Looper.myLooper()!!)
-
         viewPager2.offscreenPageLimit = 3
         viewPager2.clipToPadding = false
         viewPager2.clipChildren = true
@@ -78,36 +80,61 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
             }
         })
 
+        binding.recommendProgressBar.visibility = View.VISIBLE
         homeViewModel.getRecommendBooks()
         var pagerAdapter: InfinitePagerAdapter
         homeViewModel.booksRecommend.observe(viewLifecycleOwner) {
-            recommendedBooks = it.books.toMutableList()
+            SharedData.RecommendedBooks = it.books.toMutableList()
             lifecycleScope.launch {
-                pagerAdapter = InfinitePagerAdapter(recommendedBooks, this@HomeFragment)
+                withContext(Dispatchers.Main) {
+                    binding.recommendProgressBar.visibility = View.GONE
+                }
+                pagerAdapter = InfinitePagerAdapter(it.books, this@HomeFragment)
                 viewPager2.adapter = pagerAdapter
             }
         }
+        binding.recentProgressBar.visibility = View.VISIBLE
+
+
+
+
 
         homeViewModel.getRecentBooks()
-        val recentAdapter: BookAdapter = BookAdapter(this@HomeFragment)
+        val recentAdapter = BookAdapter(this@HomeFragment)
         binding.recentListRV.adapter = recentAdapter
         binding.recentListRV.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         homeViewModel.booksRecent.observe(viewLifecycleOwner) {
-            recentBooks = it.books
+            lifecycleScope.launch {
+                withContext(Dispatchers.Main) {
+                    binding.recentProgressBar.visibility = View.GONE
+                }
+            }
+            SharedData.RecentBooks = it.books.toMutableList()
             recentAdapter.submitList(it.books)
         }
 
-        binding.recentBook = testData[0]
-        Glide.with(requireContext())
-            .load(binding.recentBook?.image)
-            .placeholder(R.drawable.waiting)
-            .error(R.drawable.error)
-            .into(binding.recentCoverIV)
-        binding.recentReadBookCard.setOnClickListener {
-            cardOnClick(0)
+        homeViewModel.lastRead.observe(viewLifecycleOwner) {
+            if (it != null) {
+                SharedData.lastReadBook = it
+                binding.recentBook = it
+                binding.recentReadBookCard.visibility = View.VISIBLE
+                binding.recentReadBookCardERROR.visibility = View.INVISIBLE
+                Glide.with(requireContext())
+                    .load(binding.recentBook?.image)
+                    .placeholder(R.drawable.waiting)
+                    .error(R.drawable.error)
+                    .into(binding.recentCoverIV)
+                binding.recentReadBookCard.setOnClickListener {
+                    cardOnClick()
+                }
+            } else {
+                binding.recentReadBookCard.visibility = View.INVISIBLE
+                binding.recentReadBookCardERROR.visibility = View.VISIBLE
+            }
         }
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -117,6 +144,7 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
     override fun onResume() {
         super.onResume()
         handler.postDelayed(runnable, 2000)
+        homeViewModel.getLastRead()
     }
 
     private val runnable = Runnable { viewPager2.currentItem += 1 }
@@ -140,12 +168,12 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
         viewPager2.setPageTransformer(transformer)
     }
 
-    private fun cardOnClick(position: Int) {
-        open(requireContext(), DetailsActivity::class.java, testData[position])
+    private fun cardOnClick() {
+        open(requireContext(), DetailsActivity::class.java, 0, type = 0)
     }
 
     override fun pagerOnClick(position: Int, view: View?, binding: PagerBookBinding?) {
-        val actualPosition = position % recommendedBooks.size
+        val actualPosition = position % SharedData.RecommendedBooks.size
         val recyclerView = viewPager2.getChildAt(0) as? RecyclerView
 
         if (recyclerView != null) {
@@ -154,15 +182,13 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
                 if (view != null) {
                     when (view.id) {
                         R.id.infoButton -> {
-                            val book = binding?.book
-                            lastPosition = actualPosition
                             if (viewHolder.binding.pagerTV.visibility == View.VISIBLE) viewHolder.binding.pagerTV.visibility =
                                 View.GONE
                             open(
                                 requireContext(),
                                 DetailsActivity::class.java,
-                                book,
-                                position = lastPosition
+                                position = actualPosition,
+                                type = 2
                             )
                         }
 
@@ -183,22 +209,20 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
     }
 
     override fun bookOnClick(position: Int) {
-        val book = recentBooks[position]
-        open(requireContext(), DetailsActivity::class.java, book)
+        open(requireContext(), DetailsActivity::class.java, position = position, type = 1)
     }
 
     companion object {
+        // 0 for last read ,  1 for recent, 2 for recommended, 3 for search results
         fun open(
             context: Context,
             destination: Class<*>,
-            book: DetailsResponse? = null,
-            position: Int = 0
+            position: Int,
+            type: Int
         ) {
             val intent = Intent(context, destination)
-            val bundle = Bundle()
-            bundle.putSerializable("detailsResponse", book)
-            bundle.let { intent.putExtras(it) }
             intent.putExtra("ITEM_POSITION", position)
+            intent.putExtra("ITEM_TYPE", type)
             context.startActivity(intent)
         }
     }

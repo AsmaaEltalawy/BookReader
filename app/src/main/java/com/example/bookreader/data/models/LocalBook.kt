@@ -1,12 +1,14 @@
 package com.example.bookreader.data.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
 
 @Entity(tableName = "local_books")
+@Parcelize
 data class LocalBook(
     //it's book but the database version (?)
     @PrimaryKey val id: String,
@@ -21,6 +23,4 @@ data class LocalBook(
     @ColumnInfo(defaultValue = "unknown") val title: String = "unknown",
     @ColumnInfo(defaultValue = "")val url: String = "", //book's url
     @ColumnInfo(defaultValue = "0000") val year: String = "0000",
-    @ColumnInfo(defaultValue = "false") val isFavorite: Boolean = false,
-    @ColumnInfo(defaultValue = "NOT_DOWNLOADED") val isDownloaded: Boolean = false
-) : Serializable
+) : Parcelable

@@ -7,9 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.bookreader.data.local.AppDatabase
-import com.example.bookreader.data.models.DetailsResponse
+import com.example.bookreader.data.models.LocalBook
 import com.example.bookreader.downloadManager.DownloadHelper
-import com.example.bookreader.ui.theme.viewmodels.HomeViewModel.Companion.mapLocalToBook
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,18 +18,18 @@ class DownloadViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val _download = MutableLiveData<Unit>()
     val download: LiveData<Unit> = _download
-    private val _booksDownload = MutableLiveData<DetailsResponse?>()
-    val booksDownload: LiveData<DetailsResponse?> = _booksDownload
+    private val _booksDownload = MutableLiveData<LocalBook?>()
+    val booksDownload: LiveData<LocalBook?> = _booksDownload
 
     private val downloadHelper = DownloadHelper(app.applicationContext)
 
-    fun addToDownload(book: DetailsResponse?) {
+    fun addToDownload(book: LocalBook?) {
         val result = downloadHelper.startDownload(book!!, app)
         if (result)
             _download.postValue(Unit)
     }
 
-    fun deleteFromDownload(book: DetailsResponse?) {
+    fun deleteFromDownload(book: LocalBook?) {
         val downloadDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
         var filePath: String?
@@ -68,7 +67,7 @@ class DownloadViewModel(val app: Application) : AndroidViewModel(app) {
         return withContext(Dispatchers.IO) {
             val bookDao =
                 AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
-            val book: DetailsResponse? = mapLocalToBook(bookDao.getDownloadById(id))
+            val book: LocalBook? = bookDao.getDownloadById(id)
             Log.d("get from downloads", "Books: $id")
             _booksDownload.postValue(book)
             if (book != null) 1 else -1

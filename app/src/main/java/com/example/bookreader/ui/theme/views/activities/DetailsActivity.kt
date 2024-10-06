@@ -1,9 +1,9 @@
 package com.example.bookreader.ui.theme.views.activities
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
@@ -23,8 +24,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.bookreader.R
-import com.example.bookreader.data.models.DetailsResponse
-import com.example.bookreader.databinding.DetailsActivityBinding
+import com.example.bookreader.data.local.MySharedPreference
+import com.example.bookreader.data.models.SharedData
+import com.example.bookreader.databinding.ActivityDetailsBinding
 import com.example.bookreader.ui.theme.viewmodels.DownloadViewModel
 import com.example.bookreader.ui.theme.viewmodels.FavViewModel
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -35,23 +37,29 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import android.graphics.Color
 
 
 class DetailsActivity : ComponentActivity() {
 
-    lateinit var binding: DetailsActivityBinding
+    lateinit var binding: ActivityDetailsBinding
     private val favViewModel: FavViewModel by viewModels()
     private val downloadViewModel: DownloadViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.details_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_details)
         transparentStatus()
-        val detailsResponse = intent.getSerializableExtra("detailsResponse") as? DetailsResponse
         val position = intent.getIntExtra("ITEM_POSITION", 0)
-        val id = detailsResponse?.id ?: "null"
-        Log.d("DetailsActivity", "Received detailsResponse is at position: $position")
+        val type = intent.getIntExtra("ITEM_TYPE", 0)
+        val book = when (type) {
+            3 -> SharedData.searchResults[position]
+            2 -> SharedData.RecommendedBooks[position]
+            1 -> SharedData.RecentBooks[position]
+            0 -> SharedData.lastReadBook
+            else -> null
+        }
+        val id = book?.id ?: ""
+        Log.d("DetailsActivity", "Received book is at position: $position")
         lifecycleScope.launch {
             var isFavorite = false
             var isDownloaded = false
@@ -89,8 +97,8 @@ class DetailsActivity : ComponentActivity() {
             }
         }
 
-        if (detailsResponse != null) {
-            binding.book = detailsResponse
+        if (book != null) {
+            binding.book = book
             Glide.with(this@DetailsActivity)
                 .load(binding.book?.image)
                 .placeholder(R.drawable.waiting)
@@ -128,8 +136,14 @@ class DetailsActivity : ComponentActivity() {
                     downloadViewModel.deleteFromDownload(binding.book)
                     it.setBackgroundResource(R.drawable.load)
                 } else {
-                    downloadViewModel.addToDownload(binding.book)
-                    it.setBackgroundResource(R.drawable.downloaded)
+                    try {
+                        downloadViewModel.addToDownload(binding.book)
+                        it.setBackgroundResource(R.drawable.downloaded)
+                    }catch (e: Exception){
+                        showReDownloadDialog(this@DetailsActivity, e.message.toString())
+                    }
+
+
                 }
             }
         }
@@ -150,15 +164,18 @@ class DetailsActivity : ComponentActivity() {
                 }
             }
         }
-
+        val prefs = MySharedPreference(this)
         binding.readButton.setOnClickListener {
-
             lifecycleScope.launch {
                 try {
                     val filePath = downloadViewModel.getFilePath(binding.book!!.id)
                     openPdfWithFallback(this@DetailsActivity, File(filePath ?: ""))
+                    if (book != null) {
+                        prefs.saveData(book.id)
+                        Log.d("lastRead", "Last read book saved: ${prefs.getId()}")
+                    }
                 } catch (e: Exception) {
-                    showReDownloadDialog(this@DetailsActivity)
+                    showReDownloadDialog(this@DetailsActivity,e.message.toString())
                 }
             }
         }
@@ -166,10 +183,11 @@ class DetailsActivity : ComponentActivity() {
 
 
 
-    @SuppressLint("MissingInflatedId")
-    private fun showReDownloadDialog(context: Context) {
+    private fun showReDownloadDialog(context: Context, message: String) {
         val dialUI = LayoutInflater.from(context).inflate(R.layout.dial_ui, null)
         val okButton = dialUI.findViewById<Button>(R.id.ok_button)
+        val messageTextView = dialUI.findViewById<TextView>(R.id.dial_description)
+        messageTextView.text = message
         val dialog = AlertDialog.Builder(context)
             .setView(dialUI)
             .create()

@@ -20,4 +20,7 @@ interface LocalBookDao {
 
     @Query("SELECT EXISTS(SELECT * FROM local_books WHERE id = :id)")
     fun isBookExists(id: String): Boolean
+
+    @Query("SELECT * FROM local_books WHERE id = :id")
+    fun getBookById(id: String): LocalBook?
 }

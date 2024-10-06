@@ -1,12 +1,14 @@
 package com.example.bookreader.ui.theme.viewmodels
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.bookreader.data.local.AppDatabase
+import com.example.bookreader.data.local.MySharedPreference
 import com.example.bookreader.data.models.BooksResponse
-import com.example.bookreader.data.models.DetailsResponse
 import com.example.bookreader.data.models.LocalBook
 import com.example.bookreader.data.remote.BookService
 import com.example.bookreader.data.remote.RetrofitClient
@@ -16,11 +18,14 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(app: Application) : AndroidViewModel(app) {
+class HomeViewModel(val app: Application) : AndroidViewModel(app) {
     private val _booksRecent = MutableLiveData<BooksResponse>()
     val booksRecent: MutableLiveData<BooksResponse> = _booksRecent
     private val _booksRecommend = MutableLiveData<BooksResponse>()
     val booksRecommend: MutableLiveData<BooksResponse> = _booksRecommend
+    private val _lastRead = MutableLiveData<LocalBook?>()
+    val lastRead: MutableLiveData<LocalBook?> = _lastRead
+
 
 
     fun getRecentBooks() {
@@ -31,7 +36,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
                 val books = bookService.getBooks()
                 val detailedBooks = mapBookToDetails(books)
                 _booksRecent.postValue(detailedBooks)
-                Log.e("HomeViewModelsDETAILS", "Books: $detailedBooks")
+                //  Log.e("HomeViewModelsDETAILS", "Books: $detailedBooks")
             }
         }
     }
@@ -42,15 +47,57 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
                 val retrofit = RetrofitClient.getInstance()
                 val bookService = retrofit.create(BookService::class.java)
                 val books = bookService.searchBooks(query)
-                val detailedBooks = mapBookToDetails(books)
+                val detailedBooks = mapBookToDetails(books) // ....
                 _booksRecommend.postValue(detailedBooks)
-                Log.d("HomeViewModels", "Books: $detailedBooks")
+                // Log.d("HomeViewModels", "Books: $detailedBooks")
             }
         }
     }
 
-    companion object{
-         suspend fun mapBookToDetails(books: BooksResponse): BooksResponse {
+
+    fun getLastRead() {
+        val prefs = MySharedPreference(app)
+        val id = prefs.getId()
+        viewModelScope.launch {
+            if (id.isNullOrEmpty()) {
+                _lastRead.postValue(null)
+            } else {
+                var book = fromDB(id)
+                if (book != null) {
+                    _lastRead.postValue(book)
+                }else{
+                     book = fromAPI(id)
+                    _lastRead.postValue(book)
+                }
+            }
+        }
+    }
+
+    private suspend fun fromDB(id: String): LocalBook? {
+        return withContext(Dispatchers.IO) {
+            val db = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext)
+            val bookDao = db.localBookDao()
+            val book = bookDao.getBookById(id)
+            book
+        }
+    }
+
+    private suspend fun fromAPI(id: String): LocalBook? {
+        return withContext(Dispatchers.IO) {
+            val retrofit = RetrofitClient.getInstance()
+            val bookService = retrofit.create(BookService::class.java)
+            try {
+                val book = bookService.getBookById(id)
+                book
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+
+    companion object {
+        suspend fun mapBookToDetails(books: BooksResponse): BooksResponse {
             return withContext(Dispatchers.IO) {
                 val deferredResults = books.books.map { book ->
                     async {
@@ -65,58 +112,9 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
                     }
                 }
                 val detailsList = deferredResults.awaitAll().filterNotNull()
-                val detailedBooks = BooksResponse(status = "OK", books = detailsList , total = detailsList.size)
+                val detailedBooks =
+                    BooksResponse(status = "OK", books = detailsList, total = detailsList.size)
                 detailedBooks
-            }
-        }
-
-         suspend fun mapLocalToBook(book: LocalBook?): DetailsResponse? {
-            if (book == null) {
-                return null
-            }
-            return withContext(Dispatchers.IO) {
-                val detailsResponse = DetailsResponse(
-                    id = book.id,
-                    authors = book.authors,
-                    description = book.description,
-                    download = book.download,
-                    image = book.image,
-                    pages = book.pages,
-                    publisher = book.publisher,
-                    status = book.status,
-                    subtitle = book.subtitle,
-                    title = book.title,
-                    url = book.url,
-                    year = book.year,
-                    isFavorite = book.isFavorite,
-                    isDownloaded = book.isDownloaded
-                )
-                detailsResponse
-            }
-        }
-
-         suspend fun mapBookToLocal(book: DetailsResponse?): LocalBook? {
-             if (book == null) {
-                 return null
-             }
-            return withContext(Dispatchers.IO) {
-                val localBook = LocalBook(
-                    id = book.id,
-                    authors = book.authors,
-                    description = book.description,
-                    download = book.download,
-                    image = book.image,
-                    pages = book.pages,
-                    publisher = book.publisher,
-                    status = book.status,
-                    subtitle = book.subtitle,
-                    title = book.title,
-                    url = book.url,
-                    year = book.year,
-                    isFavorite = book.isFavorite,
-                    isDownloaded = book.isDownloaded
-                )
-                localBook
             }
         }
 

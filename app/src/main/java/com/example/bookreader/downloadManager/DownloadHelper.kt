@@ -1,5 +1,6 @@
 package com.example.bookreader.downloadManager
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.DownloadManager
 import android.app.NotificationChannel
@@ -12,21 +13,20 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.example.bookreader.data.local.AppDatabase
-import com.example.bookreader.data.models.DetailsResponse
 import com.example.bookreader.data.models.Downloads
-import com.example.bookreader.ui.theme.viewmodels.HomeViewModel.Companion.mapBookToLocal
+import com.example.bookreader.data.models.LocalBook
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.Serializable
 
 class DownloadHelper(private val context: Context) {
 
@@ -38,7 +38,8 @@ class DownloadHelper(private val context: Context) {
     private val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     // Method to start the download
-    fun startDownload(book: DetailsResponse, app: Application): Boolean {
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    fun startDownload(book: LocalBook, app: Application): Boolean {
         var isDone = false
         val bookUrl = book.download
         val bookTitle = book.title
@@ -57,7 +58,7 @@ class DownloadHelper(private val context: Context) {
 
         // Create intent and pass the book object to the BroadcastReceiver
         val intent = Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        intent.putExtra("book", book as Serializable)
+        intent.putExtra("book", book as Parcelable)
 
         // Register the BroadcastReceiver with the intent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -79,7 +80,11 @@ class DownloadHelper(private val context: Context) {
         override fun onReceive(ctxt: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (id == downloadId) {
-                val book = intent.getSerializableExtra("book") as DetailsResponse
+                val book = if (Build.VERSION.SDK_INT >= 33) {
+                    intent.getParcelableExtra("book", LocalBook::class.java)
+                } else {
+                    @Suppress("DEPRECATION") intent.getParcelableExtra("book")
+                }
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 val cursor: Cursor = downloadManager.query(query)
 
@@ -93,7 +98,9 @@ class DownloadHelper(private val context: Context) {
                         when (status) {
                             DownloadManager.STATUS_SUCCESSFUL -> {
                                 downloadScope.launch {
-                                    updateDatabaseWithFilePath(book, filePath ?: "", downloadId, app)
+                                    if (book != null) {
+                                        updateDatabaseWithFilePath(book, filePath ?: "", downloadId, app)
+                                    }
                                 }
                                 Toast.makeText(context.applicationContext, "Download completed: $filePath", Toast.LENGTH_LONG).show()
                             }
@@ -103,7 +110,9 @@ class DownloadHelper(private val context: Context) {
                                 val reason = if (reasonIndex >= 0) cursor.getInt(reasonIndex) else -1
 
                                 downloadScope.launch {
-                                    removeFailedDownloadFromDatabase(book, filePath ?: "", app)
+                                    if (book != null) {
+                                        removeFailedDownloadFromDatabase(book, filePath ?: "", app)
+                                    }
                                 }
 
                                 val reasonText = getFailureReasonText(reason)
@@ -165,23 +174,17 @@ class DownloadHelper(private val context: Context) {
 
 
     // Update database with the file path once download completes
-    private suspend fun updateDatabaseWithFilePath(book: DetailsResponse, filePath: String, downloadId: Long, app: Application) {
+    private suspend fun updateDatabaseWithFilePath(book: LocalBook, filePath: String, downloadId: Long, app: Application) {
         val downloadDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
         val localBookDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).localBookDao()
         downloadScope.launch(Dispatchers.IO) {
-            val localBook = mapBookToLocal(book)
-            if (localBook == null) {
-                Log.d("add to downloads", "Book is null")
-                return@launch
-            } else {
-                if(localBookDao.isBookExists(localBook.id))
-                    localBookDao.updateBook(localBook)
-                else
-                    localBookDao.addBook(localBook)
-                downloadDao.addBook(Downloads(localBook.id, filePath, downloadId))
-            }
+            if(localBookDao.isBookExists(book.id))
+                localBookDao.updateBook(book)
+            else
+                localBookDao.addBook(book)
+            downloadDao.addBook(Downloads(book.id, filePath, downloadId))
         }
     }
 
@@ -232,35 +235,29 @@ class DownloadHelper(private val context: Context) {
 
     //DELETE
 
-    fun removeFailedDownloadFromDatabase(book: DetailsResponse, filePath: String, app: Application) : Boolean {
+    fun removeFailedDownloadFromDatabase(book: LocalBook, filePath: String, app: Application) : Boolean {
         var done = false
         val downloadDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
         val localBookDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).localBookDao()
         downloadScope.launch(Dispatchers.IO) {
-            val localBook = mapBookToLocal(book)
-            if (localBook == null) {
-                Log.d("delete from downloads", "Book is null")
-                return@launch
-            } else {
-                if (localBookDao.isBookExists(localBook.id))
-                    localBookDao.updateBook(localBook)
-                else
-                    localBookDao.deleteBook(localBook)
-                if(File(filePath).exists()) {
-                    Log.d("delete from downloads", "File exists")
-                    deleteDownloadedFile(filePath,app)
-                } else{
-                    Log.d("delete from downloads", "File : $filePath")
-                    Log.e("delete from downloads", "File does not exist")
-                }
-                //-1 means we don't care,
-                // we don't need to search for the downloadID to delete or search for the book
-                downloadDao.deleteBook(Downloads(localBook.id, filePath, -1))
-                done= true
-                Log.d("delete from downloads", "Book: $localBook")
+            if (localBookDao.isBookExists(book.id))
+                localBookDao.updateBook(book)
+            else
+                localBookDao.deleteBook(book)
+            if(File(filePath).exists()) {
+                Log.d("delete from downloads", "File exists")
+                deleteDownloadedFile(filePath,app)
+            } else{
+                Log.d("delete from downloads", "File : $filePath")
+                Log.e("delete from downloads", "File does not exist")
             }
+            //-1 means we don't care,
+            // we don't need to search for the downloadID to delete or search for the book
+            downloadDao.deleteBook(Downloads(book.id, filePath, -1))
+            done= true
+            Log.d("delete from downloads", "Book: $book")
         }
         return done
     }

@@ -9,14 +9,14 @@
 
         <variable
             name="recentBook"
-            type="com.example.bookreader.data.models.DetailsResponse" />
+            type="com.example.bookreader.data.models.LocalBook" />
 
     </data>
 
     <androidx.core.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,6 +54,35 @@
                 app:layout_constraintTop_toBottomOf="@id/welcome_TV" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recentReadBookCardERROR"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_70"
+                android:backgroundTint="@color/primary_color"
+                android:elevation="@dimen/elevation_25"
+                android:visibility="invisible"
+                app:cardCornerRadius="@dimen/radius_30"
+                app:layout_constraintBottom_toBottomOf="@+id/recentReadBookCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/welcome_divider"
+                app:strokeColor="@color/secondary_color"
+                app:strokeWidth="@dimen/stroke_2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/recent_read_error"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/text_20" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+
                 android:id="@+id/recentReadBookCard"
                 android:layout_width="@dimen/match_constraints"
                 android:layout_height="wrap_content"
@@ -147,11 +176,12 @@
                 android:layout_width="@dimen/match_constraints"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_70"
+                android:layout_marginEnd="@dimen/margin_20"
                 android:text="@string/recent_list_hint"
                 android:textColor="@color/main_text"
                 android:textSize="@dimen/text_25"
                 android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="@id/recentReadBookCard"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@id/recentReadBookCard" />
 
@@ -162,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_20"
                 android:background="@drawable/rv"
+                android:minHeight="@dimen/height_200"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/padding_1"
                 android:paddingVertical="@dimen/padding_12"
@@ -170,6 +201,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recentListHintTV"
                 tools:listitem="@layout/horizontal_book" />
+
+            <ProgressBar
+                android:id="@+id/recentProgressBar"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_4"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/black"
+                android:minHeight="@dimen/height_200"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/recentListRV"
+                app:layout_constraintEnd_toEndOf="@id/recentListRV"
+                app:layout_constraintStart_toStartOf="@id/recentListRV"
+                app:layout_constraintTop_toTopOf="@id/recentListRV" />
 
 
             <TextView
@@ -194,6 +239,7 @@
                 android:layout_marginBottom="@dimen/margin_100"
                 android:backgroundTint="@color/primary_color"
                 android:elevation="@dimen/elevation_25"
+                android:minHeight="@dimen/height_350"
                 app:cardCornerRadius="@dimen/radius_30"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -201,6 +247,21 @@
                 app:layout_constraintTop_toBottomOf="@id/recommendHintTV"
                 app:strokeColor="@color/secondary_color"
                 app:strokeWidth="@dimen/stroke_2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/recommendProgressBar"
+                        android:layout_width="32dp"
+                        android:layout_height="@dimen/height_350"
+                        android:layout_margin="@dimen/margin_4"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/black"
+                        android:visibility="visible" />
+                </LinearLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewpager2"

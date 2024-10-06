@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookreader.R
-import com.example.bookreader.data.models.DetailsResponse
+import com.example.bookreader.data.models.LocalBook
 import com.example.bookreader.databinding.HorizontalBookBinding
-
 
 
 class BookAdapter(
     private val bookOnClickListener: BookOnClickListener
-) : ListAdapter<DetailsResponse, RecyclerView.ViewHolder>(
+) : ListAdapter<LocalBook, RecyclerView.ViewHolder>(
     BookDiffUtil()
 ) {
     class MyViewHolder(val binding: HorizontalBookBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -62,12 +61,12 @@ interface BookOnClickListener {
     fun bookOnClick(position: Int)
 }
 
-class BookDiffUtil : DiffUtil.ItemCallback<DetailsResponse>() {
-    override fun areItemsTheSame(oldItem: DetailsResponse, newItem: DetailsResponse): Boolean {
+class BookDiffUtil : DiffUtil.ItemCallback<LocalBook>() {
+    override fun areItemsTheSame(oldItem: LocalBook, newItem: LocalBook): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: DetailsResponse, newItem: DetailsResponse): Boolean {
+    override fun areContentsTheSame(oldItem: LocalBook, newItem: LocalBook): Boolean {
         return oldItem == newItem
     }
 

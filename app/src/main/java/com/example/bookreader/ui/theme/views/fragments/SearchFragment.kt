@@ -85,16 +85,6 @@ class SearchFragment : Fragment(), SearchOnClickListener {
             binding.recentSearchesRV.scrollToPosition(0)
         }
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("SearchFragment", "Fragment Attached")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("SearchFragment", "Fragment Created")
-    }
-
     override fun searchOnClick(position: Int, id: Int) {
         binding.searchView.setQuery(data[position].query, false)
     }
@@ -107,9 +97,8 @@ class SearchFragment : Fragment(), SearchOnClickListener {
             id: Int = 0
         ) {
             val intent = Intent(context, destination)
-            val bundle = Bundle()
-            bundle.putSerializable("query", RecentSearches(query = query, id = id))
-            bundle.let { intent.putExtras(it) }
+            intent.putExtra("query", query)
+            intent.putExtra("id", id)
             context.startActivity(intent)
         }
     }

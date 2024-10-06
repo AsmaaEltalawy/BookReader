@@ -6,10 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.bookreader.data.local.AppDatabase
-import com.example.bookreader.data.models.DetailsResponse
 import com.example.bookreader.data.models.Favorites
-import com.example.bookreader.ui.theme.viewmodels.HomeViewModel.Companion.mapBookToLocal
-import com.example.bookreader.ui.theme.viewmodels.HomeViewModel.Companion.mapLocalToBook
+import com.example.bookreader.data.models.LocalBook
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,46 +18,44 @@ class FavViewModel(val app: Application) : AndroidViewModel(app) {
     val addFav: MutableLiveData<Unit> = _addFav
     private val _deleteFav = MutableLiveData<Unit>()
     val deleteFav: MutableLiveData<Unit> = _deleteFav
-    private val _booksFav = MutableLiveData<DetailsResponse?>()
-    val booksFav: MutableLiveData<DetailsResponse?> = _booksFav
+    private val _booksFav = MutableLiveData<LocalBook?>()
+    val booksFav: MutableLiveData<LocalBook?> = _booksFav
 
 
-    suspend fun addToFav(book: DetailsResponse?) {
+    suspend fun addToFav(book: LocalBook?) {
         val bookDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).favoritesDao()
         val localBookDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).localBookDao()
         viewModelScope.launch(Dispatchers.IO) {
-            val localBook = mapBookToLocal(book)
-            if (localBook == null) {
+            if (book == null) {
                 Log.d("add to favourites", "Book is null")
                 return@launch
             } else {
-                if(localBookDao.isBookExists(localBook.id))
-                    localBookDao.updateBook(localBook)
+                if(localBookDao.isBookExists(book.id))
+                    localBookDao.updateBook(book)
                 else
-                    localBookDao.addBook(localBook)
-                _addFav.postValue(bookDao.addBookFromFav(Favorites(localBook.id)))
-                Log.d("add to favourites", "Books: $localBook")
+                    localBookDao.addBook(book)
+                _addFav.postValue(bookDao.addBookFromFav(Favorites(book.id)))
+                Log.d("add to favourites", "Books: $book")
             }
         }
     }
 
-    suspend fun deleteFromFav(book: DetailsResponse?) {
+    suspend fun deleteFromFav(book: LocalBook?) {
         val bookDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).favoritesDao()
         val localBookDao =
             AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).localBookDao()
         viewModelScope.launch(Dispatchers.IO) {
-            val localBook = mapBookToLocal(book)
-            if (localBook == null) {
+            if (book == null) {
                 Log.d("delete from favourites", "Book is null")
                 return@launch
             } else {
-                if(localBookDao.isBookExists(localBook.id))
-                    localBookDao.updateBook(localBook)
+                if(localBookDao.isBookExists(book.id))
+                    localBookDao.updateBook(book)
                 else
-                    localBookDao.deleteBook(localBook)
-                _deleteFav.postValue(bookDao.deleteBookFromFav(Favorites(localBook.id)))
-                Log.d("delete from favourites", "Books: $localBook")
+                    localBookDao.deleteBook(book)
+                _deleteFav.postValue(bookDao.deleteBookFromFav(Favorites(book.id)))
+                Log.d("delete from favourites", "Books: $book")
             }
         }
     }
@@ -67,7 +63,7 @@ class FavViewModel(val app: Application) : AndroidViewModel(app) {
     suspend fun getFavById(id: String): Int {
         return withContext(Dispatchers.IO) {
             val bookDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).favoritesDao()
-            val book: DetailsResponse? = mapLocalToBook(bookDao.getFavById(id))
+            val book: LocalBook? = bookDao.getFavById(id)
             Log.d("get from favourites", "Books: $id")
             _booksFav.postValue(book)
             if (book != null) 1 else -1

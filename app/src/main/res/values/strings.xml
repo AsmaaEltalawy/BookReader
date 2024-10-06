@@ -53,4 +53,7 @@ proident</string>
     <string name="email_or_password_incorrect">email or password incorrect</string>
     <string name="confirm">Confirm</string>
     <string name="reseat_password">Reseat Password</string>
+    <string name="recent_read_error">Please read something to add it to reading history :)</string>
+    <string name="navigation_drawer_open">open drawer</string>
+    <string name="navigation_drawer_close">close drawer</string>
 </resources>
