@@ -7,8 +7,5 @@
        app:showAsAction="always">
 
     </item>
-    <item android:title="@string/Change_language"
-        android:id="@+id/language">
 
-    </item>
 </menu>
