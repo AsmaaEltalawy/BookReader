@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@color/primary_color" />
+    </item>
+    <item android:bottom="50dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@drawable/gradient_overlay" />
+        </shape>
+    </item>
+</layer-list>

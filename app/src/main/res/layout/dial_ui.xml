@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="message"
+            type="String" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        app:cardCornerRadius="@dimen/radius_30"
+        android:background="@color/primary_color">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_color">
+
+            <TextView
+                android:id="@+id/dial_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_12"
+                android:text="@string/title_dial"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/text_25"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/margin_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dial_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_12"
+                android:layout_margin="@dimen/margin_20"
+                android:text="@{message}"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/text_20"
+                app:layout_constraintBottom_toTopOf="@id/dial_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dial_title" />
+
+            <View
+                android:id="@+id/dial_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_2"
+                android:layout_marginHorizontal="@dimen/margin_40"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/ok_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dial_description" />
+
+            <Button
+                android:id="@+id/ok_button"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"
+                android:background="@color/primary_color"
+                android:elevation="0dp"
+                android:text="@string/ok"
+                android:textColor="@color/secondary_color"
+                android:textSize="@dimen/text_20"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dial_divider" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

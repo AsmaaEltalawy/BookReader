@@ -1,23 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
 
+        <variable
+            name="recentBook"
+            type="com.example.bookreader.data.models.LocalBook" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/home"
-            android:textSize="50sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </TextView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/welcome_TV"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_70"
+                android:text="@string/welcome"
+
+                android:textSize="@dimen/text_30"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/welcome_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <View
+                android:id="@+id/welcome_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_2"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_12"
+                android:background="@color/secondary_color"
+                app:layout_constraintBottom_toTopOf="@id/recentReadBookCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/welcome_TV" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recentReadBookCardERROR"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_70"
+                android:backgroundTint="@color/primary_color"
+                android:elevation="@dimen/elevation_25"
+                android:visibility="invisible"
+                app:cardCornerRadius="@dimen/radius_30"
+                app:layout_constraintBottom_toBottomOf="@+id/recentReadBookCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/welcome_divider"
+                app:strokeColor="@color/secondary_color"
+                app:strokeWidth="@dimen/stroke_2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/recent_read_error"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/text_20" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+
+                android:id="@+id/recentReadBookCard"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_70"
+                android:backgroundTint="@color/primary_color"
+                android:elevation="@dimen/elevation_25"
+                app:cardCornerRadius="@dimen/radius_30"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/welcome_divider"
+                app:strokeColor="@color/secondary_color"
+                app:strokeWidth="@dimen/stroke_2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="37dp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/recentCoverCard"
+                        android:layout_width="@dimen/width_100"
+                        android:layout_height="@dimen/height_160"
+                        android:layout_marginVertical="@dimen/margin_20"
+                        android:background="@color/primary_color"
+                        android:elevation="@dimen/elevation_25"
+                        app:cardCornerRadius="@dimen/radius_30"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/guideline"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/recentCoverIV"
+                            android:layout_width="@dimen/width_100"
+                            android:layout_height="@dimen/height_160"
+                            android:background="@color/primary_color"
+                            android:contentDescription="@string/cover"
+                            android:scaleType="centerCrop" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/hop_back_hint_TV"
+                        android:layout_width="@dimen/match_constraints"
+                        android:layout_height="@dimen/match_constraints"
+                        android:layout_marginHorizontal="@dimen/margin_12"
+                        android:layout_marginBottom="@dimen/margin_12"
+                        android:ellipsize="end"
+                        android:gravity="bottom"
+                        android:maxLines="2"
+                        android:text="@string/recent_hint"
+                        android:textSize="@dimen/text_20"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintBottom_toTopOf="@id/recentTitleTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/recentCoverCard"
+                        app:layout_constraintTop_toTopOf="@id/recentCoverCard" />
+
+                    <TextView
+                        android:id="@+id/recentTitleTV"
+                        android:layout_width="@dimen/match_constraints"
+                        android:layout_height="@dimen/match_constraints"
+                        android:ellipsize="end"
+                        android:text="@{recentBook.title}"
+                        android:textColor="@color/secondary_color"
+                        android:textSize="@dimen/text_20"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/hop_back_hint_TV"
+                        app:layout_constraintStart_toStartOf="@id/hop_back_hint_TV"
+                        app:layout_constraintTop_toBottomOf="@id/hop_back_hint_TV" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@dimen/guide_0.1" />
+
+            <TextView
+                android:id="@+id/recentListHintTV"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_70"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:text="@string/recent_list_hint"
+
+                android:textSize="@dimen/text_25"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/recentReadBookCard" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentListRV"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_20"
+                android:background="@drawable/rv"
+                android:minHeight="@dimen/height_200"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/padding_1"
+                android:paddingVertical="@dimen/padding_12"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recentListHintTV"
+                tools:listitem="@layout/horizontal_book" />
+
+            <ProgressBar
+                android:id="@+id/recentProgressBar"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_4"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/black"
+                android:minHeight="@dimen/height_200"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/recentListRV"
+                app:layout_constraintEnd_toEndOf="@id/recentListRV"
+                app:layout_constraintStart_toStartOf="@id/recentListRV"
+                app:layout_constraintTop_toTopOf="@id/recentListRV" />
+
+
+            <TextView
+                android:id="@+id/recommendHintTV"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_70"
+                android:text="@string/recommendHintTV"
+                android:textSize="@dimen/text_25"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@id/recentListRV"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/recentListRV" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recListCard"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_100"
+                android:backgroundTint="@color/primary_color"
+                android:elevation="@dimen/elevation_25"
+                android:minHeight="@dimen/height_350"
+                app:cardCornerRadius="@dimen/radius_30"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recommendHintTV"
+                app:strokeColor="@color/secondary_color"
+                app:strokeWidth="@dimen/stroke_2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ProgressBar
+                        android:id="@+id/recommendProgressBar"
+                        android:layout_width="32dp"
+                        android:layout_height="@dimen/height_350"
+                        android:layout_margin="@dimen/margin_4"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/black"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewpager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_20" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

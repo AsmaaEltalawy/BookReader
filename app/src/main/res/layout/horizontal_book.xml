@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="book"
+            type="com.example.bookreader.data.models.LocalBook" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/recentListBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_30"
+            android:elevation="@dimen/elevation_25"
+            android:layout_margin="@dimen/margin_12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:contentDescription="@string/cover"
+                android:id="@+id/recentListCoverIV"
+                android:layout_width="@dimen/width_100"
+                android:layout_height="@dimen/height_160"
+                android:scaleType="centerCrop"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="wrap_content"
+            android:text="@{book.title}"
+            android:textColor="@color/secondary_color"
+            android:textSize="@dimen/text_20"
+            android:id="@+id/recentListTitleTV"
+            android:maxLines="3"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="@id/recentListBook"
+            app:layout_constraintStart_toStartOf="@id/recentListBook"
+            app:layout_constraintTop_toBottomOf="@id/recentListBook" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
