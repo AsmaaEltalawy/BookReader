@@ -3,10 +3,58 @@
     <string name="enter">Enter</string>
     <string name="home">Home</string>
     <string name="library">Library\n</string>
-    <string name="search">Search\n</string>
+    <string name="search">Search</string>
     <string name="Profile">Profile\n</string>
-    <string name="Darkmode">Dark mode\n</string>
     <string name="Change_language">Change language\n</string>
     <string name="contact">Contact us\n</string>
     <string name="Booked">BOOKED\n</string>
+    <string name="cover">cover</string>
+    <string name="header">header blurred cover</string>
+    <string name="recent_hint">Hop right back in</string>
+    <string name="recent_list_hint">Browse recently added books</string>
+    <string name="recommendHintTV">Books we think you might enjoy</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="welcome">Greetings!</string>
+    <string name="pages_format">pages: %s</string>
+    <string name="year_format">year: %s</string>
+    <string name="expButton">expand/collapse the description block</string>
+    <string name="publisher_format">publisher: %s</string>
+    <string name="favorite">add to/remove from favourites</string>
+    <string name="download">download button</string>
+    <string name="details">view book details</string>
+    <string name="read">Read offline</string>
+    <string name="search_hint">Got a book in mind?</string>
+    <string name="searches">Recent Searches:</string>
+    <string name="avatar">user\'s avatar</string>
+    <string name="lorem_ipsum">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_dial">oops, something went wrong</string>
+    <string name="description_dial">we can\'t open the file because of some error, please make sure the book is downloaded</string>
+    <string name="ok">ok</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="user_name">User Name</string>
+    <string name="i_have_an_account">I have an account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="new_password">New Password</string>
+    <string name="this_field_can_t_be_empty">This Field can\'t be empty</string>
+    <string name="field_not_valid">Field Not Valid</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="changed_password_failed">Changed Password Failed</string>
+    <string name="email_or_password_incorrect">email or password incorrect</string>
+    <string name="confirm">Confirm</string>
+    <string name="reseat_password">Reseat Password</string>
+    <string name="recent_read_error">Please read something to add it to reading history :)</string>
+    <string name="navigation_drawer_open">open drawer</string>
+    <string name="navigation_drawer_close">close drawer</string>
+    <string name="Privacypolicy">Privacy Policy\n</string>
+    <string name="theme">Dark Mode</string>
 </resources>

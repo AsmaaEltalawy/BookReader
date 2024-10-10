@@ -6,14 +6,22 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.bookreader.Home_fragment"
-        android:label="Home_fragment" />
+        android:name="com.example.bookreader.ui.theme.views.fragments.HomeFragment"
+        android:label="Home_fragment" >
+        <action
+            android:id="@+id/action_home_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
     <fragment
         android:id="@+id/search"
-        android:name="com.example.bookreader.Search_Fragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.SearchFragment"
         android:label="Search_Fragment" />
     <fragment
         android:id="@+id/browse"
-        android:name="com.example.bookreader.LibraryFragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.SearchFragment"
         android:label="Browse_Fragment" />
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.example.bookreader.ui.theme.views.fragments.activities.DetailsActivity"
+        android:label="DetailsActivity" />
 </navigation>

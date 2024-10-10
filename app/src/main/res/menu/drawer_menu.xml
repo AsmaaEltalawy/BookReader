@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<group android:id="@+id/g1">
+    <group android:id="@+id/g1">
+        <item
+            android:id="@+id/dark"
+            android:title="@string/theme"
+            app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
+            app:showAsAction="always" />
 
-    <item android:title="@string/Change_language"
-        android:id="@+id/language">
+        <item
+            android:id="@+id/language"
+            android:title="@string/Change_language">
 
-    </item>
-</group>
-<group android:id="@+id/g2">
-    <item android:id="@+id/contact"
-        android:title="@string/contact">
+        </item>
+    </group>
 
-    </item>
-</group>
+    <group android:id="@+id/g2">
+
+        <item
+            android:id="@+id/PrivacyPolicy"
+            android:title="@string/Privacypolicy">
+
+        </item>
+        <item
+            android:id="@+id/contact"
+            android:title="@string/contact">
+
+        </item>
+    </group>
 </menu>
