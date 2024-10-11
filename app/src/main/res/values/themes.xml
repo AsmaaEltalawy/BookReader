@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    
     <style name="Theme.BookReader" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="android:statusBarColor">@color/primary_color</item>
         <item name="android:windowLightStatusBar">true</item>
