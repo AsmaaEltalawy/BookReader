@@ -1,59 +1,84 @@
 <resources>
-    <string name="app_name">BookReader</string>
-    <string name="enter">Enter</string>
-    <string name="home">Home</string>
-    <string name="library">Library\n</string>
-    <string name="search">Search</string>
-    <string name="Profile">Profile\n</string>
-    <string name="Darkmode">Dark mode\n</string>
-    <string name="Change_language">Change language\n</string>
-    <string name="contact">Contact us\n</string>
-    <string name="Booked">BOOKED\n</string>
-    <string name="cover">cover</string>
-    <string name="header">header blurred cover</string>
-    <string name="recent_hint">Hop right back in</string>
-    <string name="recent_list_hint">Browse recently added books</string>
-    <string name="recommendHintTV">Books we think you might enjoy</string>
+    <string name="app_name">قارئ الكتب</string>
+    <string name="enter">دخول</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="library">المكتبة\n</string>
+    <string name="search">بحث</string>
+    <string name="Profile">الملف الشخصي\n</string>
+    <string name="Change_language">تغيير اللغة\n</string>
+    <string name="contact">اتصل بنا\n</string>
+    <string name="Booked">الكتب \n</string>
+    <string name="cover">الغلاف</string>
+    <string name="header">صورة غلاف مشوشة</string>
+    <string name="recent_hint">عد للقراءة مجددًا</string>
+    <string name="recent_list_hint">استعرض الكتب المضافة حديثًا</string>
+    <string name="recommendHintTV">كتب نعتقد أنك قد تستمتع بها</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="welcome">Greetings!</string>
-    <string name="pages_format">pages: %s</string>
-    <string name="year_format">year: %s</string>
-    <string name="expButton">expand/collapse the description block</string>
-    <string name="publisher_format">publisher: %s</string>
-    <string name="favorite">add to/remove from favourites</string>
-    <string name="download">download button</string>
-    <string name="details">view book details</string>
-    <string name="read">Read offline</string>
-    <string name="search_hint">Got a book in mind?</string>
-    <string name="searches">Recent Searches:</string>
-    <string name="avatar">user\'s avatar</string>
+    <string name="welcome">مرحبًا!</string>
+    <string name="pages_format">الصفحات: %s</string>
+    <string name="year_format">السنة: %s</string>
+    <string name="expButton">توسيع/طي وصف الكتاب</string>
+    <string name="publisher_format">الناشر: %s</string>
+    <string name="favorite">إضافة/إزالة من المفضلة</string>
+    <string name="download">زر التحميل</string>
+    <string name="details">عرض تفاصيل الكتاب</string>
+    <string name="read">القراءة دون اتصال</string>
+    <string name="search_hint">هل لديك كتاب في ذهنك؟</string>
+    <string name="searches">عمليات البحث الأخيرة:</string>
+    <string name="avatar">الصورة الرمزية للمستخدم</string>
     <string name="lorem_ipsum">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident</string>
-    <string name="title_activity_search_results">SearchResultsActivity</string>
-    <string name="title_dial">oops, something went wrong</string>
-    <string name="description_dial">we can\'t open the file because of some error, please make sure the book is downloaded</string>
-    <string name="ok">ok</string>
+لوريم إيبسوم هو نص شكلي يستخدم في صناعات الطباعة والتنضيد. لوريم إيبسوم كان النص الوهمي القياسي في الصناعة منذ القرن السادس عشر.
+تمت ترجمته بنجاح مع تغيرات طفيفة في اللغة على مر العصور.</string>
+    <string name="title_activity_search_results">نتائج البحث</string>
+    <string name="title_dial">عذرًا، حدث خطأ ما</string>
+    <string name="description_dial">لا يمكننا فتح الملف بسبب خطأ ما، يرجى التأكد من تحميل الكتاب</string>
+    <string name="ok">موافق</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login">Login</string>
-    <string name="forget_password">Forget password?</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="user_name">User Name</string>
-    <string name="i_have_an_account">I have an account</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="new_password">New Password</string>
-    <string name="this_field_can_t_be_empty">This Field can\'t be empty</string>
-    <string name="field_not_valid">Field Not Valid</string>
-    <string name="something_went_wrong">Something went wrong</string>
-    <string name="changed_password_failed">Changed Password Failed</string>
-    <string name="email_or_password_incorrect">email or password incorrect</string>
-    <string name="confirm">Confirm</string>
-    <string name="reseat_password">Reseat Password</string>
-    <string name="recent_read_error">Please read something to add it to reading history :)</string>
-    <string name="navigation_drawer_open">open drawer</string>
-    <string name="navigation_drawer_close">close drawer</string>
+    <string name="hello_blank_fragment">مرحبًا بكم في صفحة فارغة</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="forget_password">هل نسيت كلمة المرور؟</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="i_have_an_account">لدي حساب</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="new_password">كلمة مرور جديدة</string>
+    <string name="this_field_can_t_be_empty">هذا الحقل لا يمكن أن يكون فارغًا</string>
+    <string name="field_not_valid">الحقل غير صالح</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="changed_password_failed">فشل في تغيير كلمة المرور</string>
+    <string name="email_or_password_incorrect">البريد الإلكتروني أو كلمة المرور غير صحيحة</string>
+    <string name="confirm">تأكيد</string>
+    <string name="reseat_password">إعادة تعيين كلمة المرور</string>
+    <string name="recent_read_error">يرجى قراءة شيء ما لإضافته إلى سجل القراءة :)</string>
+    <string name="navigation_drawer_open">فتح القائمة</string>
+    <string name="navigation_drawer_close">إغلاق القائمة</string>
+    <string name="Privacypolicy">سياسة الخصوصية\n</string>
+    <string name="Darkmode">الوضع الداكن</string>
+    <string name="privacypolicycontent">
+    خصوصيتك مهمة بالنسبة لنا.<br/>
+    توضح سياسة الخصوصية هذه كيف يتم جمع معلوماتك واستخدامها وحمايتها عند استخدامك لتطبيق القارئ.<br/><br/>
+
+    1. المعلومات التي نجمعها: قد نقوم بجمع المعلومات التالية لتحسين تجربتك:<br/>
+    - المعلومات الشخصية: إذا قمت بإنشاء حساب، قد نجمع اسمك، عنوان بريدك الإلكتروني، وكلمة المرور.<br/>
+    - معلومات الاستخدام: معلومات مثل تفضيلاتك في القراءة، الوقت المستغرق في الأقسام المختلفة، ومعلومات الجهاز لمساعدتنا في تحسين أداء التطبيق.<br/><br/>
+
+    2. كيف نستخدم معلوماتك: نستخدم معلوماتك لـ:<br/>
+    - تقديم، تحسين، وتخصيص تجربة القراءة الخاصة بك.<br/>
+    - إرسال التحديثات، الإشعارات، أو الرد على الاستفسارات.<br/>
+    - تعزيز أداء التطبيق وتحليل أنماط الاستخدام.<br/><br/>
+
+    3. مشاركة المعلومات: نحن لا نبيع أو نشارك معلوماتك الشخصية مع أطراف ثالثة، إلا كما هو مطلوب بموجب القانون أو لحماية حقوقنا.<br/><br/>
+
+    4. أمان البيانات: نقوم بتنفيذ تدابير أمنية معيارية لحماية بياناتك. ومع ذلك، لا توجد طريقة نقل عبر الإنترنت آمنة 100%.<br/><br/>
+
+    5. حقوقك: لديك الحق في:<br/>
+    - الوصول إلى معلوماتك الشخصية وتحديثها أو حذفها.<br/>
+    - إلغاء الاشتراك في أي اتصالات.<br/><br/>
+
+    6. تغييرات على هذه السياسة: قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سيتم نشر أي تغييرات داخل التطبيق.<br/><br/>
+
+    اتصل بنا: إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على (asmaaeltalawy2004@gmail.com).
+</string>
+    <string name="privacy_policy">سياسه الخصوصيه</string>
 </resources>
