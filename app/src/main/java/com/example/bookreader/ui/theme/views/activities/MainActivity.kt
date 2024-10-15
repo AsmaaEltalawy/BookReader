@@ -1,7 +1,9 @@
 package com.example.bookreader.ui.theme.views.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +15,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.bookreader.R
 import com.example.bookreader.databinding.ActivityMainBinding
+import com.example.bookreader.ui.theme.views.fragments.activities.PrivacyPolicy
+import java.util.Locale
+
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -35,8 +40,11 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
 
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         setThemeBasedOnPreferences()
         drawerLayout.addDrawerListener(toggle)
@@ -58,6 +66,32 @@ class MainActivity : AppCompatActivity() {
             }
             saveThemePreference(isChecked)
         }
+        binding.navigationview.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.language -> {
+                    val currentLocale = resources.configuration.locales[0].language
+                    if (currentLocale == "ar") {
+                        setLocale("en") // Switch to English
+                    } else {
+                        setLocale("ar") // Switch to Arabic
+                    }
+                    true
+                }
+
+                R.id.PrivacyPolicy -> {
+                    val intent = Intent(this, PrivacyPolicy::class.java)
+                    startActivity(intent)
+                    true
+                }
+
+                R.id.contact -> {
+                    contactUs()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
 
@@ -75,5 +109,27 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("isDarkMode", isDarkMode)
         editor.apply()
     }
+
+    fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        // Restart activity to apply changes
+        val refreshIntent = Intent(this, MainActivity::class.java)
+        startActivity(refreshIntent)
+        finish()
+    }
+
+    private fun contactUs() {
+        val phoneNumber = "01280925493"
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$phoneNumber")
+        }
+        startActivity(intent)
+    }
 }
+
 
