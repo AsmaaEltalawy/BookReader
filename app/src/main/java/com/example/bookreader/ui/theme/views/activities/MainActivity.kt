@@ -67,13 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
-        }
-
-        if (isNetworkAvailable(this)) {
-            loadFragment(HomeFragment())
-        } else {
-            loadFragment(LibraryFragment())
-        }
+        } 
     }
 
     private fun logout() {
@@ -87,12 +81,4 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.nav_host_fragment, fragment)
             .commit()
     }
-
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetworkInfo
-        return activeNetwork != null && activeNetwork.isConnected
-    }
-
-
 }
