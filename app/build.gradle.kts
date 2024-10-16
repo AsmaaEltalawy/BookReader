@@ -60,6 +60,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.messaging)
     val nav_version = "2.7.7"
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -135,6 +136,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     // Splash Screen Core
     implementation("androidx.core:core-splashscreen:1.0.0")
+    //firebase messaging
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation("com.google.firebase:firebase-analytics")
 }
 kapt {
     correctErrorTypes = true
