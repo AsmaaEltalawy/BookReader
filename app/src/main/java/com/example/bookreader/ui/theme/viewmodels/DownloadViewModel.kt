@@ -18,10 +18,20 @@ class DownloadViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val _download = MutableLiveData<Unit>()
     val download: LiveData<Unit> = _download
-    private val _booksDownload = MutableLiveData<LocalBook?>()
-    val booksDownload: LiveData<LocalBook?> = _booksDownload
-
+    private val _booksDownload = MutableLiveData<List<LocalBook?>>()
+    val booksDownload: LiveData<List<LocalBook?>> = _booksDownload
+    private val _singleBookDownload = MutableLiveData<LocalBook?>()
+    val singleBookDownload: LiveData<LocalBook?> = _singleBookDownload
     private val downloadHelper = DownloadHelper(app.applicationContext)
+
+    fun getAllDownloads() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val downloadsDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
+            val downloadedBooks = downloadsDao.getAll() // Fetch downloaded books
+            // Convert LocalBooks to DetailsResponse if needed
+            _booksDownload.postValue(downloadedBooks)
+        }
+    }
 
     fun addToDownload(book: LocalBook?) {
         val result = downloadHelper.startDownload(book!!, app)
@@ -69,7 +79,7 @@ class DownloadViewModel(val app: Application) : AndroidViewModel(app) {
                 AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
             val book: LocalBook? = bookDao.getDownloadById(id)
             Log.d("get from downloads", "Books: $id")
-            _booksDownload.postValue(book)
+            _singleBookDownload.postValue(book)
             if (book != null) 1 else -1
         }
     }

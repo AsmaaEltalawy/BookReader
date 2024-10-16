@@ -12,8 +12,9 @@
 </group>
 <group android:id="@+id/g2">
     <item android:id="@+id/contact"
-        android:title="@string/contact">
-
-    </item>
+        android:title="@string/contact"/>
+        <item
+            android:id="@+id/logout"
+            android:title="@string/Logout" />
 </group>
 </menu>

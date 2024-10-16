@@ -40,6 +40,7 @@ class SearchFragment : Fragment(), SearchOnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recentSearchAdapter = RecentSearchAdapter(this)
         binding.recentSearchesRV.layoutManager = object : LinearLayoutManager(requireContext()) {
             override fun canScrollVertically(): Boolean {
@@ -85,6 +86,7 @@ class SearchFragment : Fragment(), SearchOnClickListener {
             binding.recentSearchesRV.scrollToPosition(0)
         }
     }
+
     override fun searchOnClick(position: Int, id: Int) {
         binding.searchView.setQuery(data[position].query, false)
     }

@@ -36,8 +36,6 @@ proident</string>
     <string name="title_dial">oops, something went wrong</string>
     <string name="description_dial">we can\'t open the file because of some error, please make sure the book is downloaded</string>
     <string name="ok">ok</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="forget_password">Forget password?</string>
     <string name="email">Email</string>
@@ -56,4 +54,27 @@ proident</string>
     <string name="recent_read_error">Please read something to add it to reading history :)</string>
     <string name="navigation_drawer_open">open drawer</string>
     <string name="navigation_drawer_close">close drawer</string>
+    <string name="Downloaded_Books_are_Empty">Downloaded Books are Empty</string>
+    <string name="Favorite_Books_are_Empty">Favorite Books are Empty</string>
+    <string name="Password">New password</string>
+    <string name="Username">Username</string>
+    <string name="Email">Email</string>
+    <string name="Save">Save</string>
+    <string name="Edit_Profile">Edit Profile</string>
+    <string name="Downloads">Downloads</string>
+    <string name="zero">0</string>
+    <string name="Favorites">Favorite</string>
+    <string name="edit_password_content_description">Edit password content description</string>
+    <string name="save_button_content_description">Save button</string>
+    <string name="edit_email">Edit email</string>
+    <string name="edit_username">Edit username</string>
+    <string name="current_password">Current password</string>
+    <string name="back_button">Back button</string>
+    <string name="message_icon">Message Icon</string>
+    <string name="The_comment_of_the_user">The comment of the user</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="comment">Comment</string>
+    <string name="submit">Submit</string>
+    <string name="loading">Loading...</string>
+    <string name="Logout">Logout</string>
 </resources>

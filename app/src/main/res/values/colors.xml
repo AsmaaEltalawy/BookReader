@@ -20,4 +20,5 @@
     <color name="theme">#FFFFFF</color>
     <color name="dimmed">#80000000</color>
     <color name="tertiary_text">#FFFFFF</color>
+    <color name="yellow">#FFD600</color>
 </resources>

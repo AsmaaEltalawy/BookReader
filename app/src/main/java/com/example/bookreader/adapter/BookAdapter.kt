@@ -1,5 +1,6 @@
 package com.example.bookreader.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.bookreader.R
 import com.example.bookreader.data.models.LocalBook
 import com.example.bookreader.databinding.HorizontalBookBinding
+import com.example.bookreader.ui.theme.views.activities.DetailsActivity
 
 
 class BookAdapter(
