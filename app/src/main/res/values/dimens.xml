@@ -39,6 +39,8 @@
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_10">10dp</dimen>
     <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="height_220">220dp</dimen>
     <item name="guide_0_5" type="dimen" format="float">0.5</item>
     <item name="guide_0.1" type="dimen" format="float">0.1</item>"
 </resources>

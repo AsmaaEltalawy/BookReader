@@ -37,7 +37,6 @@ android {
             )
         }
     }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -61,8 +60,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.firebase.database.ktx)
-    implementation(libs.androidx.cardview)
     val nav_version = "2.7.7"
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -138,8 +135,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     // Splash Screen Core
     implementation("androidx.core:core-splashscreen:1.0.0")
-
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
 kapt {
     correctErrorTypes = true

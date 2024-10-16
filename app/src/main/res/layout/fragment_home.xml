@@ -2,9 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
-
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
 
         <variable
@@ -16,6 +14,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/theme"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -201,14 +200,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recentListHintTV"
                 tools:listitem="@layout/horizontal_book" />
-
+            <ImageView
+                android:id="@+id/recentListError"
+                android:layout_width="@dimen/match_constraints"
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/margin_20"
+                android:padding="@dimen/padding_16"
+                android:src="@drawable/error"
+                app:layout_constraintTop_toTopOf="@id/recentListRV"
+                app:layout_constraintStart_toStartOf="@id/recentListRV"
+                app:layout_constraintEnd_toEndOf="@id/recentListRV"/>
             <ProgressBar
                 android:id="@+id/recentProgressBar"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_4"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/black"
+                android:indeterminateTint="@color/main_text"
                 android:minHeight="@dimen/height_200"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/recentListRV"
@@ -259,9 +267,17 @@
                         android:layout_height="@dimen/height_350"
                         android:layout_margin="@dimen/margin_4"
                         android:indeterminate="true"
-                        android:indeterminateTint="@color/black"
+                        android:indeterminateTint="@color/main_text"
                         android:visibility="visible" />
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/recListError"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_20"
+                    android:padding="@dimen/padding_16"
+                    android:src="@drawable/error" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewpager2"
