@@ -14,6 +14,7 @@ import com.example.bookreader.adapter.BookOnClickListener
 import com.example.bookreader.data.models.SharedData
 import com.example.bookreader.databinding.ActivitySearchResultsBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,6 +26,7 @@ class SearchResultsActivity : ComponentActivity(), BookOnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_results)
         val query = intent.getStringExtra("query")
 
@@ -73,5 +75,6 @@ class SearchResultsActivity : ComponentActivity(), BookOnClickListener {
             context.startActivity(intent)
         }
     }
+
 }
 

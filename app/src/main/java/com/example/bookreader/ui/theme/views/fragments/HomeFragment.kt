@@ -30,6 +30,7 @@ import com.example.bookreader.databinding.FragmentHomeBinding
 import com.example.bookreader.databinding.PagerBookBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
 import com.example.bookreader.ui.theme.views.activities.DetailsActivity
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,7 +44,6 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewPager2: ViewPager2
     private val homeViewModel: HomeViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -143,6 +143,8 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
 
     override fun onResume() {
         super.onResume()
+        val appBarLayout = requireActivity().findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout.setExpanded(true, true)
         handler.postDelayed(runnable, 2000)
         homeViewModel.getLastRead()
     }
@@ -211,6 +213,7 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
     override fun bookOnClick(position: Int) {
         open(requireContext(), DetailsActivity::class.java, position = position, type = 1)
     }
+
 
     companion object {
         // 0 for last read ,  1 for recent, 2 for recommended, 3 for search results

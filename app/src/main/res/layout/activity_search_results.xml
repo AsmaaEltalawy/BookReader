@@ -8,9 +8,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/theme"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/searchResultsCard"
             android:layout_margin="@dimen/margin_20"
@@ -31,7 +31,7 @@
                     android:layout_margin="@dimen/margin_4"
                     android:layout_width="32dp"
                     android:layout_height="@dimen/height_350"
-                    android:indeterminateTint="@color/main_text"
+                    android:indeterminateTint="@color/black"
                     android:indeterminate="true"
                     android:visibility="visible"
                     />
@@ -44,12 +44,6 @@
                 tools:listitem="@layout/horizontal_book"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2" />
-            <ImageView
-                android:id="@+id/searchResultsError"
-                android:padding="@dimen/padding_16"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/notfound"/>
 
         </com.google.android.material.card.MaterialCardView>
 
