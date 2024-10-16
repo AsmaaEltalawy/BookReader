@@ -1,4 +1,4 @@
-package com.example.bookreader.ui.theme.views.fragments.activities
+package com.example.bookreader.ui.theme.views.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,7 +9,7 @@ class PrivacyPolicy : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.privacypolicy)
+        setContentView(R.layout.activity_privacy_policy)
 
     }
 }

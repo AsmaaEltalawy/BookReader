@@ -14,7 +14,6 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
@@ -24,11 +23,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.bookreader.R
+import com.example.bookreader.baseClass.BaseActivity
 import com.example.bookreader.data.local.MySharedPreference
 import com.example.bookreader.data.models.SharedData
 import com.example.bookreader.databinding.ActivityDetailsBinding
 import com.example.bookreader.ui.theme.viewmodels.DownloadViewModel
 import com.example.bookreader.ui.theme.viewmodels.FavViewModel
+import com.example.bookreader.utils.NetworkUtils
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -39,12 +40,11 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 
-class DetailsActivity : ComponentActivity() {
+class DetailsActivity : BaseActivity() {
 
     lateinit var binding: ActivityDetailsBinding
     private val favViewModel: FavViewModel by viewModels()
     private val downloadViewModel: DownloadViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details)
@@ -136,14 +136,16 @@ class DetailsActivity : ComponentActivity() {
                     downloadViewModel.deleteFromDownload(binding.book)
                     it.setBackgroundResource(R.drawable.load)
                 } else {
-                    try {
-                        downloadViewModel.addToDownload(binding.book)
-                        it.setBackgroundResource(R.drawable.downloaded)
-                    }catch (e: Exception){
-                        showReDownloadDialog(this@DetailsActivity, e.message.toString())
+                    if (NetworkUtils.isNetworkAvailable(this@DetailsActivity)) {
+                        try {
+                            downloadViewModel.addToDownload(binding.book)
+                            it.setBackgroundResource(R.drawable.downloaded)
+                        }catch (e: Exception){
+                            showReDownloadDialog(this@DetailsActivity, e.message.toString())
+                        }
+                    } else {
+                        showReDownloadDialog(this@DetailsActivity, "No internet connection")
                     }
-
-
                 }
             }
         }

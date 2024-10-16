@@ -3,7 +3,6 @@ package com.example.bookreader.ui.theme.views.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -11,14 +10,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookreader.R
 import com.example.bookreader.adapter.BookAdapter
 import com.example.bookreader.adapter.BookOnClickListener
+import com.example.bookreader.baseClass.BaseActivity
 import com.example.bookreader.data.models.SharedData
 import com.example.bookreader.databinding.ActivitySearchResultsBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
-import kotlinx.coroutines.Dispatchers
+import com.example.bookreader.utils.NetworkUtils
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class SearchResultsActivity : ComponentActivity(), BookOnClickListener {
+class SearchResultsActivity : BaseActivity(), BookOnClickListener {
     lateinit var binding: ActivitySearchResultsBinding
     private val apiViewModel: HomeViewModel by viewModels()
     private lateinit var bookAdapter: BookAdapter
@@ -28,25 +27,48 @@ class SearchResultsActivity : ComponentActivity(), BookOnClickListener {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_results)
         val query = intent.getStringExtra("query")
 
-        if (query != null && query != "") {
-            val formattedQuery = formatQuery(query)
-            apiViewModel.getRecommendBooks(formattedQuery)
-        }
-
+        binding.searchResultsError.visibility = android.view.View.GONE
         binding.searchResultsProgressBar.visibility = android.view.View.VISIBLE
 
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            if (!query.isNullOrEmpty()) {
+                val formattedQuery = formatQuery(query)
+                apiViewModel.booksRecommend.observe(this) { booksResponse ->
+                    if (booksResponse.books.isNotEmpty()) {
+                        bookAdapter.submitList(booksResponse.books.toMutableList())
+                        SharedData.searchResults = booksResponse.books.toMutableList()
+                        binding.searchResultsRV.visibility = android.view.View.VISIBLE
+                        binding.searchResultsError.visibility = android.view.View.GONE
+                        binding.searchResultsProgressBar.visibility = android.view.View.GONE
+                    } else {
+                        showError()
+                    }
+                }
+                lifecycleScope.launch {
+                    try {
+                        apiViewModel.getRecommendBooks(formattedQuery)
+                    } catch (e: Exception) {
+                        showError()
+                    }
+                }
+                setupRecyclerView()
+            } else {
+                showError()
+            }
+        } else {
+            showError()
+        }
+    }
+    private fun setupRecyclerView() {
         bookAdapter = BookAdapter(this)
         binding.searchResultsRV.layoutManager = GridLayoutManager(this, 2)
         binding.searchResultsRV.adapter = bookAdapter
-        apiViewModel.booksRecommend.observe(this) {
-            SharedData.searchResults = it.books.toMutableList()
-            lifecycleScope.launch {
-                withContext(Dispatchers.Main){
-                    binding.searchResultsProgressBar.visibility = android.view.View.GONE
-                }
-                bookAdapter.submitList(SharedData.searchResults)
-            }
-        }
+    }
+
+    private fun showError() {
+        binding.searchResultsRV.visibility = android.view.View.GONE
+        binding.searchResultsProgressBar.visibility = android.view.View.GONE
+        binding.searchResultsError.visibility = android.view.View.VISIBLE
     }
 
     override fun bookOnClick(position: Int) {
@@ -64,7 +86,7 @@ class SearchResultsActivity : ComponentActivity(), BookOnClickListener {
         fun open(
             context: Context,
             destination: Class<*>,
-            position: Int ,
+            position: Int,
             type: Int
         ) {
             val intent = Intent(context, destination)

@@ -30,9 +30,8 @@ import com.example.bookreader.databinding.FragmentHomeBinding
 import com.example.bookreader.databinding.PagerBookBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
 import com.example.bookreader.ui.theme.views.activities.DetailsActivity
-import kotlinx.coroutines.Dispatchers
+import com.example.bookreader.utils.NetworkUtils
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 
@@ -81,38 +80,63 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
         })
 
         binding.recommendProgressBar.visibility = View.VISIBLE
-        homeViewModel.getRecommendBooks()
-        var pagerAdapter: InfinitePagerAdapter
-        homeViewModel.booksRecommend.observe(viewLifecycleOwner) {
-            SharedData.RecommendedBooks = it.books.toMutableList()
+        binding.recListError.visibility = View.GONE
+
+        if (NetworkUtils.isNetworkAvailable(this.requireContext())) {
             lifecycleScope.launch {
-                withContext(Dispatchers.Main) {
+                try {
+                    homeViewModel.getRecommendBooks() // Call API to get recommended books
+                } catch (e: Exception) {
+                    showError(binding.recommendProgressBar, binding.recListError)
+                }
+            }
+
+            homeViewModel.booksRecommend.observe(viewLifecycleOwner) { booksResponse ->
+                if (booksResponse.books.isNotEmpty()) {
+                    SharedData.RecommendedBooks = booksResponse.books.toMutableList()
+
                     binding.recommendProgressBar.visibility = View.GONE
+                    val pagerAdapter = InfinitePagerAdapter(booksResponse.books, this@HomeFragment)
+                    viewPager2.adapter = pagerAdapter
+                } else {
+                    showError(binding.recommendProgressBar, binding.recListError)
                 }
-                pagerAdapter = InfinitePagerAdapter(it.books, this@HomeFragment)
-                viewPager2.adapter = pagerAdapter
             }
+        } else {
+            showError(binding.recommendProgressBar, binding.recListError)
         }
+
+
         binding.recentProgressBar.visibility = View.VISIBLE
+        binding.recentListError.visibility = View.GONE
 
-
-
-
-
-        homeViewModel.getRecentBooks()
-        val recentAdapter = BookAdapter(this@HomeFragment)
-        binding.recentListRV.adapter = recentAdapter
-        binding.recentListRV.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        homeViewModel.booksRecent.observe(viewLifecycleOwner) {
+        if (NetworkUtils.isNetworkAvailable(this.requireContext())) {
             lifecycleScope.launch {
-                withContext(Dispatchers.Main) {
-                    binding.recentProgressBar.visibility = View.GONE
+                try {
+                    homeViewModel.getRecentBooks()
+                } catch (e: Exception) {
+                    showError(binding.recentProgressBar, binding.recentListError)
                 }
             }
-            SharedData.RecentBooks = it.books.toMutableList()
-            recentAdapter.submitList(it.books)
+
+            val recentAdapter = BookAdapter(this@HomeFragment)
+            binding.recentListRV.adapter = recentAdapter
+            binding.recentListRV.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            homeViewModel.booksRecent.observe(viewLifecycleOwner) { booksResponse ->
+                if (booksResponse.books.isNotEmpty()) {
+                    SharedData.RecentBooks = booksResponse.books.toMutableList()
+                    binding.recentProgressBar.visibility = View.GONE
+                    recentAdapter.submitList(booksResponse.books)
+                } else {
+                    showError(binding.recentProgressBar, binding.recentListError)
+                }
+            }
+        } else {
+            showError(binding.recentProgressBar, binding.recentListError)
         }
+
 
         homeViewModel.lastRead.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -135,6 +159,10 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
         }
     }
 
+    private fun showError(progressBar: View, errorView: View) {
+        progressBar.visibility = View.GONE
+        errorView.visibility = View.VISIBLE
+    }
 
     override fun onPause() {
         super.onPause()

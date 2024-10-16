@@ -1,7 +1,6 @@
 package com.example.bookreader.ui.theme.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +32,11 @@ class HomeViewModel(val app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO) {
                 val retrofit = RetrofitClient.getInstance()
                 val bookService = retrofit.create(BookService::class.java)
-                val books = bookService.getBooks()
+                val books = try {
+                    bookService.getBooks()
+                } catch (e: Exception) {
+                    BooksResponse(emptyList(), "error", 0)
+                }
                 val detailedBooks = mapBookToDetails(books)
                 _booksRecent.postValue(detailedBooks)
                 //  Log.e("HomeViewModelsDETAILS", "Books: $detailedBooks")
@@ -46,7 +49,11 @@ class HomeViewModel(val app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO) {
                 val retrofit = RetrofitClient.getInstance()
                 val bookService = retrofit.create(BookService::class.java)
-                val books = bookService.searchBooks(query)
+                val books: BooksResponse = try {
+                    bookService.searchBooks(query)
+                } catch (e: Exception) {
+                    BooksResponse(emptyList(), "error", 0)
+                }
                 val detailedBooks = mapBookToDetails(books) // ....
                 _booksRecommend.postValue(detailedBooks)
                 // Log.d("HomeViewModels", "Books: $detailedBooks")
