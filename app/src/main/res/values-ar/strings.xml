@@ -80,5 +80,28 @@
 
     اتصل بنا: إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على (asmaaeltalawy2004@gmail.com).
 </string>
-    <string name="privacy_policy">سياسه الخصوصيه</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="Downloaded_Books_are_Empty">الكتب المحملة فارغة</string>
+    <string name="Favorite_Books_are_Empty">الكتب المفضلة فارغة</string>
+    <string name="Password">كلمة مرور جديدة</string>
+    <string name="Username">اسم المستخدم</string>
+    <string name="Email">البريد الإلكتروني</string>
+    <string name="Save">حفظ</string>
+    <string name="Edit_Profile">تعديل الملف الشخصي</string>
+    <string name="Downloads">التنزيلات</string>
+    <string name="zero">٠</string>
+    <string name="Favorites">المفضلة</string>
+    <string name="edit_password_content_description">وصف تعديل كلمة المرور</string>
+    <string name="save_button_content_description">زر الحفظ</string>
+    <string name="edit_email">تعديل البريد الإلكتروني</string>
+    <string name="edit_username">تعديل اسم المستخدم</string>
+    <string name="current_password">كلمة المرور الحالية</string>
+    <string name="back_button">زر الرجوع</string>
+    <string name="message_icon">أيقونة الرسالة</string>
+    <string name="The_comment_of_the_user">تعليق المستخدم</string>
+    <string name="add_comment">إضافة تعليق</string>
+    <string name="comment">تعليق</string>
+    <string name="submit">إرسال</string>
+    <string name="loading">جارٍ التحميل…</string>
+    <string name="Logout">تسجيل الخروج</string>
 </resources>

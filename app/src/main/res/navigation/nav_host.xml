@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_host"
     app:startDestination="@id/home">
 
@@ -24,4 +25,33 @@
         android:id="@+id/detailsActivity"
         android:name="com.example.bookreader.ui.theme.views.activities.DetailsActivity"
         android:label="DetailsActivity" />
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.DownloadFragment"
+        android:label="DownloadFragment" />
+    <fragment
+        android:id="@+id/library"
+        android:name="com.example.bookreader.ui.theme.views.fragments.LibraryFragment"
+        android:label="LibraryFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.EditProfileFragment"
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.bookreader.ui.theme.views.fragments.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

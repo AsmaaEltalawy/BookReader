@@ -4,12 +4,10 @@ import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,7 +20,6 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
@@ -32,15 +29,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.bookreader.R
+import com.example.bookreader.adapter.CommentsAdapter
 import com.example.bookreader.baseClass.BaseActivity
-import com.example.bookreader.bookreaderapp.Application
 import com.example.bookreader.data.local.MySharedPreference
+import com.example.bookreader.data.models.Comment
 import com.example.bookreader.data.models.DownloadState
+import com.example.bookreader.data.models.LocalBook
 import com.example.bookreader.data.models.SharedData
 import com.example.bookreader.databinding.ActivityDetailsBinding
-import com.example.bookreader.onDownloadCompleteListener.OnDownloadCompleteListener
+import com.example.bookreader.databinding.DialogCommentBinding
 import com.example.bookreader.ui.theme.viewmodels.DownloadViewModel
 import com.example.bookreader.ui.theme.viewmodels.FavViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -52,16 +54,25 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 
-class DetailsActivity :  BaseActivity() {
+class DetailsActivity : BaseActivity() {
 
     lateinit var binding: ActivityDetailsBinding
     private val favViewModel: FavViewModel by viewModels()
     private val downloadViewModel: DownloadViewModel by viewModels()
+    private lateinit var loadingDialog: AlertDialog
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var commentsAdapter: CommentsAdapter
+    private val commentsList = mutableListOf<Comment>()
+    private lateinit var comment: String
+    private lateinit var bookId: String
+    private val timestamp = System.currentTimeMillis().toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details)
         transparentStatus()
+        loadingDialog = createLoadingDialog()
+        firebaseAuth = FirebaseAuth.getInstance()
         val position = intent.getIntExtra("ITEM_POSITION", 0)
         val type = intent.getIntExtra("ITEM_TYPE", 0)
         val book = when (type) {
@@ -124,37 +135,11 @@ class DetailsActivity :  BaseActivity() {
 
         if (book != null) {
             binding.book = book
-            Glide.with(this@DetailsActivity)
-                .load(binding.book?.image)
-                .placeholder(R.drawable.waiting)
-                .error(R.drawable.error)
-                .transform(
-                    BlurTransformation(
-                        25,
-                        3
-                    )
-                )
-                .into((object : CustomTarget<Drawable>() {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        binding.blurView.background = resource
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-                }))
-
-            Glide.with(this@DetailsActivity)
-                .load(binding.book?.image)
-                .placeholder(R.drawable.waiting)
-                .error(R.drawable.error)
-                .into(binding.cover)
-
+            setupBookCover(book)
+            fetchComments(book.id)  // Fetch comments when the book is set
         }
 
-        downloadViewModel.download.observe(this){
+        downloadViewModel.download.observe(this) {
             lifecycleScope.launch {
                 isDownloaded = downloadViewModel.getDownloadStatus(id)
                 val downloadId = downloadViewModel.getDownloadIdById(id)
@@ -186,7 +171,7 @@ class DetailsActivity :  BaseActivity() {
                         try {
                             Log.d("DetailsActivity", "clicked to delete")
                             downloadViewModel.deleteFromDownload(binding.book)
-                        } catch (e: Exception){
+                        } catch (e: Exception) {
                             showReDownloadDialog(this@DetailsActivity, e.message.toString())
 
                         }
@@ -246,6 +231,12 @@ class DetailsActivity :  BaseActivity() {
                 } catch (e: Exception) {
                     showReDownloadDialog(this@DetailsActivity, e.message.toString())
                 }
+            }
+        }
+
+        binding.addCommentBt.setOnClickListener {
+            if (book != null) {
+                addCommentDialog(book.id)
             }
         }
     }
@@ -324,13 +315,13 @@ class DetailsActivity :  BaseActivity() {
     ) {
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         var status: Int = DownloadManager.STATUS_FAILED
-        var state : DownloadState
+        var state: DownloadState
         // Use a Handler to repeatedly check download progress every second
         val handler = Handler(Looper.getMainLooper())
         downloadButton.setBackgroundResource(R.drawable.waiting)
         handler.post(object : Runnable {
             override fun run() {
-                runBlocking { state =  downloadViewModel.getDownloadStatus(bookID) }
+                runBlocking { state = downloadViewModel.getDownloadStatus(bookID) }
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 val cursor = downloadManager.query(query)
                 // Get the status of the download
@@ -375,5 +366,140 @@ class DetailsActivity :  BaseActivity() {
                 }
             }
         })
+    }
+
+    private fun createLoadingDialog(): AlertDialog {
+        val builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_loading, null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+
+        return builder.create()
+    }
+
+    private fun showLoadingDialog() {
+        if (!loadingDialog.isShowing) {
+            loadingDialog.show()
+        }
+    }
+
+    private fun hideLoadingDialog() {
+        if (loadingDialog.isShowing) {
+            loadingDialog.dismiss()
+        }
+    }
+
+
+    private fun setupBookCover(book: LocalBook) {
+        Glide.with(this@DetailsActivity)
+            .load(book.image)
+            .placeholder(R.drawable.waiting)
+            .error(R.drawable.error)
+            .transform(
+                BlurTransformation(
+                    25,
+                    3
+                )
+            )
+            .into((object : CustomTarget<Drawable>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    binding.blurView.background = resource
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            }))
+
+        Glide.with(this@DetailsActivity)
+            .load(book.image)
+            .placeholder(R.drawable.waiting)
+            .error(R.drawable.error)
+            .into(binding.cover)
+    }
+
+    private fun addCommentDialog(bookId: String) {
+        val commentAddBinding = DialogCommentBinding.inflate(LayoutInflater.from(this))
+
+        val builder = AlertDialog.Builder(this, R.style.CustomDialog)
+        builder.setView(commentAddBinding.root)
+
+        val alertDialog = builder.create()
+        alertDialog.show()
+
+        commentAddBinding.backBT.setOnClickListener { alertDialog.dismiss() }
+        commentAddBinding.submitBT.setOnClickListener {
+            // Correctly retrieve the comment text
+            comment = commentAddBinding.comment.editText?.text.toString().trim()
+
+            if (comment.isEmpty()) {
+                Toast.makeText(this, "Enter comment", Toast.LENGTH_SHORT).show()
+            } else {
+                alertDialog.dismiss()
+                addComment(bookId)
+            }
+        }
+    }
+
+    private fun addComment(bookId: String) {
+        showLoadingDialog()
+        val hashMap = HashMap<String, Any>()
+        hashMap["id"] = timestamp
+        hashMap["timestamp"] = timestamp
+        hashMap["comment"] = comment
+        hashMap["uid"] = firebaseAuth.currentUser?.uid ?: ""
+
+        // Fetch the username from FireStore
+
+        firebaseAuth.currentUser?.let { user ->
+            FirebaseFirestore.getInstance().collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val username = document.getString("name") ?: "Unknown User"
+                        hashMap["username"] = username
+
+                        // Add the comment to the FireStore for the specific book
+                        val commentsRef = FirebaseFirestore.getInstance().collection("books")
+                            .document(bookId).collection("comments").document(timestamp)
+
+                        commentsRef.set(hashMap).addOnSuccessListener {
+                            Toast.makeText(this, "Comment added", Toast.LENGTH_SHORT).show()
+                            hideLoadingDialog()
+                            fetchComments(bookId) // Fetch comments to display
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Failed to add comment: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            hideLoadingDialog()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun fetchComments(bookId: String) {
+        val commentsRef = FirebaseFirestore.getInstance().collection("books").document(bookId)
+            .collection("comments")
+        commentsRef.orderBy("timestamp", Query.Direction.DESCENDING).get()
+            .addOnSuccessListener { documents ->
+                commentsList.clear()
+                for (document in documents) {
+                    val comment = document.toObject(Comment::class.java)
+                    commentsList.add(comment)
+                }
+                updateRecyclerView(bookId)
+            }.addOnFailureListener { e ->
+            Log.e("DetailsActivity", "Error fetching comments: ${e.message}")
+        }
+    }
+
+    private fun updateRecyclerView(bookId: String) {
+        commentsAdapter = CommentsAdapter(commentsList, bookId, this)
+        binding.commentsRecyclerView.adapter = commentsAdapter
     }
 }

@@ -2,12 +2,12 @@
     <string name="app_name">BookReader</string>
     <string name="enter">Enter</string>
     <string name="home">Home</string>
-    <string name="library">Library\n</string>
+    <string name="library">Library</string>
     <string name="search">Search</string>
-    <string name="Profile">Profile\n</string>
-    <string name="Change_language">Change language\n</string>
-    <string name="contact">Contact us\n</string>
-    <string name="Booked">BOOKED\n</string>
+    <string name="Profile">Profile</string>
+    <string name="Change_language">Change language</string>
+    <string name="contact">Contact us</string>
+    <string name="Booked">BOOKED</string>
     <string name="cover">cover</string>
     <string name="header">header blurred cover</string>
     <string name="recent_hint">Hop right back in</string>
@@ -82,5 +82,28 @@ proident</string>
     Contact Us: If you have any questions about this Privacy Policy, please contact us at (asmaaeltalawy2004@gmail.com).
 </string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="Downloaded_Books_are_Empty">Downloaded Books are Empty</string>
+    <string name="Favorite_Books_are_Empty">Favorite Books are Empty</string>
+    <string name="Password">New password</string>
+    <string name="Username">Username</string>
+    <string name="Email">Email</string>
+    <string name="Save">Save</string>
+    <string name="Edit_Profile">Edit Profile</string>
+    <string name="Downloads">Downloads</string>
+    <string name="zero">0</string>
+    <string name="Favorites">Favorite</string>
+    <string name="edit_password_content_description">Edit password content description</string>
+    <string name="save_button_content_description">Save button</string>
+    <string name="edit_email">Edit email</string>
+    <string name="edit_username">Edit username</string>
+    <string name="current_password">Current password</string>
+    <string name="back_button">Back button</string>
+    <string name="message_icon">Message Icon</string>
+    <string name="The_comment_of_the_user">The comment of the user</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="comment">Comment</string>
+    <string name="submit">Submit</string>
+    <string name="loading">Loading...</string>
+    <string name="Logout">Logout</string>
 
 </resources>
