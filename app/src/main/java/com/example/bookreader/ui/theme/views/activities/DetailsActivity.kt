@@ -40,6 +40,7 @@ import com.example.bookreader.databinding.ActivityDetailsBinding
 import com.example.bookreader.databinding.DialogCommentBinding
 import com.example.bookreader.ui.theme.viewmodels.DownloadViewModel
 import com.example.bookreader.ui.theme.viewmodels.FavViewModel
+import com.example.bookreader.utils.NetworkUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -191,11 +192,14 @@ class DetailsActivity : BaseActivity() {
                     }
 
                     DownloadState.NOT_DOWNLOADED -> {
-                        try {
-                            Log.d("DetailsActivity", "clicked to download")
-                            downloadViewModel.addToDownload(binding.book)
-                        } catch (e: Exception) {
-                            showReDownloadDialog(this@DetailsActivity, e.message.toString())
+                        if(NetworkUtils.isNetworkAvailable(this@DetailsActivity)){
+                            Log.d("network","there is network")
+                            try {
+                                Log.d("DetailsActivity", "clicked to download")
+                                downloadViewModel.addToDownload(binding.book)
+                            } catch (e: Exception) {
+                                showReDownloadDialog(this@DetailsActivity, e.message.toString())
+                            }
                         }
                     }
                 }
