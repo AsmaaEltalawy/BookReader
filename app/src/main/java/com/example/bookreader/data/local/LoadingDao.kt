@@ -23,4 +23,7 @@ interface LoadingDao {
 
     @Query("SELECT id FROM downloading_books WHERE downloadId = :downloadId")
     suspend fun getIdByDownloadId(downloadId: Long): String?
+
+    @Query("DELETE FROM downloading_books")
+    suspend fun deleteAllDownloadingBooks()
 }

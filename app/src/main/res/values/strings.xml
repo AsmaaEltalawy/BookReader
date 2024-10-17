@@ -7,7 +7,7 @@
     <string name="Profile">Profile</string>
     <string name="Change_language">Change language</string>
     <string name="contact">Contact us</string>
-    <string name="Booked">BOOKED</string>
+    <string name="Booked">BOOKED\n</string>
     <string name="cover">cover</string>
     <string name="header">header blurred cover</string>
     <string name="recent_hint">Hop right back in</string>

@@ -2,10 +2,10 @@ package com.example.bookreader.ui.theme.views.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import com.example.bookreader.R
+import com.example.bookreader.baseClass.BaseActivity
 
-class PrivacyPolicy : AppCompatActivity() {
+class PrivacyPolicy : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

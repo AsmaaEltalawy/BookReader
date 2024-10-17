@@ -7,7 +7,7 @@
     <string name="Profile">الملف الشخصي</string>
     <string name="Change_language">تغيير اللغة</string>
     <string name="contact">اتصل بنا</string>
-    <string name="Booked">BOOKED</string>
+    <string name="Booked">BOOKED\n</string>
     <string name="cover">الغلاف</string>
     <string name="header">صورة غلاف مشوشة</string>
     <string name="recent_hint">عد للقراءة مجددًا</string>
