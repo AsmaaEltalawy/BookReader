@@ -89,6 +89,10 @@ class MainActivity : BaseActivity() {
                     contactUs()
                     true
                 }
+                R.id.logout -> {
+                    logout()
+                    true
+                }
 
                 else -> false
             }
@@ -103,6 +107,13 @@ class MainActivity : BaseActivity() {
         }
     }
 */
+
+    private fun logout() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun saveThemePreference(isDarkMode: Boolean) {
         mySharedPreference.saveTheme(isDarkMode)
     }

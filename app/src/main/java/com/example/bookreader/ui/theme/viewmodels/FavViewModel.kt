@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookreader.data.local.AppDatabase
 import com.example.bookreader.data.models.Favorites
 import com.example.bookreader.data.models.LocalBook
+import com.example.bookreader.data.models.SharedData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +30,8 @@ class FavViewModel(val app: Application) : AndroidViewModel(app) {
         val bookDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).favoritesDao()
         viewModelScope.launch(Dispatchers.IO) {
             val favorites = bookDao.getAllFavourites().filterNotNull()
+            SharedData.FavoritedList.clear()  // Clear the old data
+            SharedData.FavoritedList.addAll(favorites)  // Add all favorite books
             _booksFav.postValue(favorites)
         }
     }

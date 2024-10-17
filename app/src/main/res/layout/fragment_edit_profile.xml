@@ -4,164 +4,181 @@
 
     <data></data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/profilebkg"
-        tools:context=".ui.theme.views.fragments.EditProfileFragment">
+        android:backgroundTint="@color/theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Back Arrow ImageButton at the top-left (start) -->
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/black_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:background="@drawable/profile_background"
+            android:contentDescription="@string/avatar"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:scaleType="fitXY" />
 
-        <!-- CardView containing the profile fields -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/backButton">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.theme.views.fragments.EditProfileFragment">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Back Arrow ImageButton at the top-left (start) -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/black_arrow_back"
+                android:backgroundTint="@color/main_text"
+                android:contentDescription="@string/back_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Edit_Profile"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableStart="@drawable/email_ic"
-                    android:drawablePadding="8dp"
-                    android:hint="@string/Email"
-                    android:inputType="textEmailAddress"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    tools:ignore="Autofill,VisualLintTextFieldSize" />
-
-                <EditText
-                    android:id="@+id/editUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableStart="@drawable/person_ic"
-                    android:drawablePadding="8dp"
-                    android:hint="@string/Username"
-                    android:inputType="text"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    tools:ignore="Autofill,VisualLintTextFieldSize" />
+            <!-- CardView containing the profile fields -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="20dp"
+                android:background="@color/theme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backButton">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:background="@drawable/custom_edittext"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Edit_Profile"
+                        android:textAlignment="center"
+                        android:textColor="@color/main_text"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/currentPassword"
-                        android:layout_width="0dp"
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_weight="1"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/custom_edittext"
-                        android:drawableStart="@drawable/password_ic"
+                        android:drawableStart="@drawable/email_ic"
                         android:drawablePadding="8dp"
-                        android:hint="@string/current_password"
-                        android:inputType="textPassword"
+                        android:hint="@string/Email"
+                        android:inputType="textEmailAddress"
                         android:padding="8dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/main_text"
                         tools:ignore="Autofill,VisualLintTextFieldSize" />
 
-                    <ImageButton
-                        android:id="@+id/toggleCurrentPasswordVisibility"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
+                    <EditText
+                        android:id="@+id/editUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:src="@drawable/visibility_off"
-                        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:background="@drawable/custom_edittext"
+                        android:drawableStart="@drawable/person_ic"
+                        android:drawablePadding="8dp"
+                        android:hint="@string/Username"
+                        android:inputType="text"
+                        android:padding="8dp"
+                        android:textColor="@color/main_text"
+                        tools:ignore="Autofill,VisualLintTextFieldSize" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/currentPassword"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableStart="@drawable/password_ic"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/current_password"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:textColor="@color/main_text"
+                            tools:ignore="Autofill,VisualLintTextFieldSize" />
+
+                        <ImageButton
+                            android:id="@+id/toggleCurrentPasswordVisibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:src="@drawable/visibility_off"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/editPassword"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableStart="@drawable/password_ic"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/Password"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:textColor="@color/black"
+                            tools:ignore="Autofill,VisualLintTextFieldSize" />
+
+                        <ImageButton
+                            android:id="@+id/toggleNewPasswordVisibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:src="@drawable/visibility_off"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/pink_background"
+                        android:contentDescription="@string/save_button_content_description"
+                        android:text="@string/Save"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:ignore="RedundantDescriptionCheck,VisualLintButtonSize" />
 
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            </androidx.cardview.widget.CardView>
 
-                <EditText
-                    android:id="@+id/editPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/custom_edittext"
-                    android:drawableStart="@drawable/password_ic"
-                    android:drawablePadding="8dp"
-                    android:hint="@string/Password"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    tools:ignore="Autofill,VisualLintTextFieldSize" />
-
-                <ImageButton
-                    android:id="@+id/toggleNewPasswordVisibility"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/visibility_off"
-                    tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-            </LinearLayout>
-
-                <Button
-                    android:id="@+id/saveButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/pink_background"
-                    android:contentDescription="@string/save_button_content_description"
-                    android:text="@string/Save"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:ignore="RedundantDescriptionCheck,VisualLintButtonSize" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

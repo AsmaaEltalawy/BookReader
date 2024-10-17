@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookreader.data.local.AppDatabase
 import com.example.bookreader.data.models.DownloadState
 import com.example.bookreader.data.models.LocalBook
+import com.example.bookreader.data.models.SharedData
 import com.example.bookreader.downloadManager.DownloadHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,8 +30,9 @@ class DownloadViewModel(val app: Application) : AndroidViewModel(app) {
     fun getAllDownloads() {
         viewModelScope.launch(Dispatchers.IO) {
             val downloadsDao = AppDatabase.DatabaseBuilder.getInstance(app.applicationContext).downloadsDao()
-            val downloadedBooks = downloadsDao.getAll() // Fetch downloaded books
-            // Convert LocalBooks to DetailsResponse if needed
+            val downloadedBooks = downloadsDao.getAll().filterNotNull()
+            SharedData.DownloadedList.clear()
+            SharedData.DownloadedList.addAll(downloadedBooks)
             _booksDownload.postValue(downloadedBooks)
         }
     }

@@ -31,6 +31,7 @@ import com.example.bookreader.databinding.PagerBookBinding
 import com.example.bookreader.ui.theme.viewmodels.HomeViewModel
 import com.example.bookreader.ui.theme.views.activities.DetailsActivity
 import com.example.bookreader.utils.NetworkUtils
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -171,6 +172,8 @@ class HomeFragment : Fragment(), PagerOnClickListener, BookOnClickListener {
 
     override fun onResume() {
         super.onResume()
+        val appBarLayout = requireActivity().findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout.setExpanded(true, true)
         handler.postDelayed(runnable, 2000)
         homeViewModel.getLastRead()
     }

@@ -8,5 +8,7 @@ class SharedData {
         var lastReadBook = LocalBook(id = "")
         var searchResults = mutableListOf<LocalBook>()
         var currentlyDownloadingBooks = mutableListOf<LocalBook>()
+        var FavoritedList = mutableListOf<LocalBook>()
+        var DownloadedList = mutableListOf<LocalBook>()
     }
 }

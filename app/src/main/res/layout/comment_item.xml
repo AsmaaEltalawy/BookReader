@@ -10,11 +10,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        app:cardCornerRadius="@dimen/radius_30"
-        android:background="@color/theme"
-        app:cardElevation="1dp"
-        app:contentPadding="8dp">
+        android:layout_marginBottom="1dp"
+        app:cardElevation="0dp"
+        app:contentPadding="8dp"
+        android:backgroundTint="@color/theme">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/grey"
+                android:textColor="@color/secondary_color"
                 android:layout_alignParentEnd="true" />
 
             <TextView
@@ -55,7 +54,7 @@
                 android:layout_below="@id/name"
                 android:layout_toEndOf="@id/profileImg"
                 android:text="@string/The_comment_of_the_user"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/secondary_color"
                 android:textSize="14sp"
                 android:layout_marginTop="5dp" />
         </RelativeLayout>

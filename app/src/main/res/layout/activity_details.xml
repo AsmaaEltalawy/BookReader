@@ -258,18 +258,18 @@
                     android:id="@+id/addCommentBt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/black_add_comment"
-                    android:background="@color/white"
-                    android:padding="10dp"
+                    android:background="@drawable/black_add_comment"
+                    android:backgroundTint="@color/main_text"
                     android:layout_alignParentEnd="true"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:layout_margin="@dimen/_10dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/commentsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="@dimen/margin_20"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/addCommentBt"
+                    android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/comment_item"
                     app:layoutManager="LinearLayoutManager" />
 

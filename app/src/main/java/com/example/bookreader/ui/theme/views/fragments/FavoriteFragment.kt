@@ -67,6 +67,6 @@ class FavoriteFragment : Fragment(), BookOnClickListener {
 
     // Handle click on a book
     override fun bookOnClick(position: Int) {
-        open(requireContext(), DetailsActivity::class.java, position = position, type = 1)
+        open(requireContext(), DetailsActivity::class.java, position = position, type = 4)
     }
 }

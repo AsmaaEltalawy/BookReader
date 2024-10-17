@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookreader.data.models.Comment
 import com.example.bookreader.databinding.CommentItemBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,10 +39,21 @@ class CommentsAdapter(
         holder.binding.comment.text = comment.comment
         holder.binding.date.text = formatDate(comment.timestamp)
 
-        // Set up click listener for deleting the comment
-        holder.binding.root.setOnLongClickListener {
-            showDeleteConfirmationDialog(position, comment)
-            true
+        // Get the current user's UID
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+
+        // Only allow deletion if the current user is the author of the comment
+        if (comment.uid == currentUserUid) {
+            holder.binding.root.setOnLongClickListener {
+                showDeleteConfirmationDialog(position, comment)
+                true
+            }
+        } else {
+            // Disable the delete option for non-authors
+            holder.binding.root.setOnLongClickListener {
+                Toast.makeText(context, "You can only delete your own comments", Toast.LENGTH_SHORT).show()
+                true
+            }
         }
     }
 
@@ -93,5 +105,4 @@ class CommentsAdapter(
             }
         }
     }
-
 }

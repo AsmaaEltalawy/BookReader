@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.theme.views.fragments.DownloadFragment">
 
-        <!-- When no favorites are found -->
+        <!-- When no download are found -->
         <ImageView
             android:id="@+id/emptyStateImageView"
             android:layout_width="250dp"
@@ -33,19 +33,19 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/_10dp"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/main_text"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/emptyStateImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- RecyclerView for displaying favorite books -->
+        <!-- RecyclerView for displaying download books -->
 
         <TextView
             android:id="@+id/downloadCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary_color"
+            android:textColor="@color/main_text"
             android:visibility="gone"
             android:layout_marginTop="@dimen/margin_20"
             android:layout_marginEnd="@dimen/_10dp"

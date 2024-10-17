@@ -24,8 +24,10 @@
         </item>
         <item
             android:id="@+id/contact"
-            android:title="@string/contact">
+            android:title="@string/contact"/>
+        <item
+            android:id="@+id/logout"
+            android:title="@string/Logout" />
 
-        </item>
     </group>
 </menu>

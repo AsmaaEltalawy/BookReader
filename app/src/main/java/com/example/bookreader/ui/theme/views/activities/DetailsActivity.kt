@@ -76,6 +76,8 @@ class DetailsActivity : BaseActivity() {
         val position = intent.getIntExtra("ITEM_POSITION", 0)
         val type = intent.getIntExtra("ITEM_TYPE", 0)
         val book = when (type) {
+            5 -> SharedData.DownloadedList[position]
+            4 -> SharedData.FavoritedList[position]
             3 -> SharedData.searchResults[position]
             2 -> SharedData.RecommendedBooks[position]
             1 -> SharedData.RecentBooks[position]
@@ -452,8 +454,6 @@ class DetailsActivity : BaseActivity() {
         hashMap["comment"] = comment
         hashMap["uid"] = firebaseAuth.currentUser?.uid ?: ""
 
-        // Fetch the username from FireStore
-
         firebaseAuth.currentUser?.let { user ->
             FirebaseFirestore.getInstance().collection("users").document(user.uid).get()
                 .addOnSuccessListener { document ->
@@ -461,14 +461,25 @@ class DetailsActivity : BaseActivity() {
                         val username = document.getString("name") ?: "Unknown User"
                         hashMap["username"] = username
 
-                        // Add the comment to the FireStore for the specific book
+                        // Add the comment to FireStore
                         val commentsRef = FirebaseFirestore.getInstance().collection("books")
                             .document(bookId).collection("comments").document(timestamp)
 
                         commentsRef.set(hashMap).addOnSuccessListener {
                             Toast.makeText(this, "Comment added", Toast.LENGTH_SHORT).show()
                             hideLoadingDialog()
-                            fetchComments(bookId) // Fetch comments to display
+                            // Directly add the new comment to the list
+                            val newComment = Comment(
+                                id = timestamp,
+                                comment = comment,
+                                uid = firebaseAuth.currentUser?.uid ?: "",
+                                username = username,
+                                timestamp = timestamp
+                            )
+                            // Add the new comment to the list and notify the adapter
+                            commentsList.add(0, newComment) // Add at the top for newest first
+                            commentsAdapter.notifyItemInserted(0)
+                            binding.commentsRecyclerView.scrollToPosition(0) // Scroll to the top
                         }.addOnFailureListener { e ->
                             Toast.makeText(
                                 this,
@@ -494,8 +505,8 @@ class DetailsActivity : BaseActivity() {
                 }
                 updateRecyclerView(bookId)
             }.addOnFailureListener { e ->
-            Log.e("DetailsActivity", "Error fetching comments: ${e.message}")
-        }
+                Log.e("DetailsActivity", "Error fetching comments: ${e.message}")
+            }
     }
 
     private fun updateRecyclerView(bookId: String) {
