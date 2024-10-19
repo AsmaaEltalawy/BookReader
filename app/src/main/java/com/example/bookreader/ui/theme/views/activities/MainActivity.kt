@@ -1,6 +1,8 @@
 package com.example.bookreader.ui.theme.views.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,16 +18,19 @@ import com.example.bookreader.R
 import com.example.bookreader.baseClass.BaseActivity
 import com.example.bookreader.data.local.MySharedPreference
 import com.example.bookreader.databinding.ActivityMainBinding
+import com.example.bookreader.utils.Constant
 import java.util.Locale
 
 class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var mySharedPreference: MySharedPreference
+    private lateinit var sharedPreference:SharedPreferences
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         mySharedPreference = MySharedPreference(this)
+        sharedPreference = getSharedPreferences(Constant.REGISTER_INFO, Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -109,6 +114,9 @@ class MainActivity : BaseActivity() {
 */
 
     private fun logout() {
+        sharedPreference.edit().apply(){
+            putBoolean(Constant.USER_IS_REGISTERED, false)
+        }.commit()
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
         finish()
