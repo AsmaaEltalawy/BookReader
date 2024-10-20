@@ -33,14 +33,69 @@
                 android:layout_marginBottom="@dimen/margin_20"
                 app:cardCornerRadius="@dimen/_30sp"
                 app:cardElevation="4dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_16"
-                    android:text="@string/privacypolicycontent"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/text_16" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent2"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent3"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent4"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent5"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent6"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:text="@string/privacypolicycontent7"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/text_16" />
+</LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
 

@@ -60,27 +60,66 @@ proident</string>
     <string name="privacypolicycontent">
     Your privacy is important to us.<br />
     This Privacy Policy outlines how your information is collected, used, and protected when you use the Reader App.<br /><br />
-    1. Information We Collect: We may collect the following information to improve your experience:<br />
-    - Personal Information: If you create an account, we may collect your name, email address, and password.<br />
-    - Usage Information: Information such as your reading preferences, time spent on different sections, and device information to help us improve app performance.<br /><br />
-
+    </string>
+    <string name="privacypolicycontent1">
     2. How We Use Your Information: We use your information to:<br />
     - Provide, improve, and personalize your reading experience.<br />
     - Send updates, notifications, or respond to inquiries.<br />
     - Enhance app performance and analyze usage patterns.<br /><br />
-
-    3. Sharing of Information: We do not sell or share your personal information with third parties, except as required by law or to protect our rights.<br /><br />
-
-    4. Data Security: We implement industry-standard security measures to safeguard your data. However, no method of transmission over the internet is 100% secure.<br /><br />
-
-    5. Your Rights: You have the right to:<br />
-    - Access, update, or delete your personal information.<br />
-    - Opt-out of any communications.<br /><br />
-
-    6. Changes to This Policy: We may update this Privacy Policy from time to time. Any changes will be posted within the app.<br /><br />
-
-    Contact Us: If you have any questions about this Privacy Policy, please contact us at (asmaaeltalawy2004@gmail.com).
 </string>
+    <string name="privacypolicycontent2">
+    1. Information We Collect: We may collect the following information to improve your experience:
+            - Personal Information: If you create an account, we may collect your name, email address, and password.
+           - Usage Information: Information such as your reading preferences, time spent on different sections, and device information to help us improve app performance.
+</string>
+    <string name="privacypolicycontent3">
+    2. How We Use Your Information: We use your information to:<br />
+    - Provide, improve, and personalize your reading experience.<br />
+    - Send updates, notifications, or respond to inquiries.<br />
+    - Enhance app performance and analyze usage patterns.<br /><br />
+</string>
+    <string name="privacypolicycontent4">
+
+  4. Data Security: We implement industry-standard security measures to safeguard your data. However, no method of transmission over the internet is 100% secure.
+
+</string>
+    <string name="privacypolicycontent5">
+   5. Your Rights: You have the right to:
+           - Access, update, or delete your personal information.
+         - Opt-out of any communications.
+
+</string>
+    <string name="privacypolicycontent6">
+
+  6. Changes to This Policy: We may update this Privacy Policy from time to time. Any changes will be posted within the app.
+
+</string>
+    <string name="privacypolicycontent7">
+
+   Contact Us: If you have any questions about this Privacy Policy, please contact us at (asmaaeltalawy2004@gmail.com).
+
+</string>
+    <!--    <string name=" 1. Information We Collect: We may collect the following information to improve your experience:<br />-->
+    <!--    - Personal Information: If you create an account, we may collect your name, email address, and password.<br />-->
+    <!--    - Usage Information: Information such as your reading preferences, time spent on different sections, and device information to help us improve app performance.<br /><br />-->
+
+    <!--    2. How We Use Your Information: We use your information to:<br />-->
+    <!--    - Provide, improve, and personalize your reading experience.<br />-->
+    <!--    - Send updates, notifications, or respond to inquiries.<br />-->
+    <!--    - Enhance app performance and analyze usage patterns.<br /><br />-->
+
+    <!--    3. Sharing of Information: We do not sell or share your personal information with third parties, except as required by law or to protect our rights.<br /><br />-->
+
+    <!--    4. Data Security: We implement industry-standard security measures to safeguard your data. However, no method of transmission over the internet is 100% secure.<br /><br />-->
+
+    <!--    5. Your Rights: You have the right to:<br />-->
+    <!--    - Access, update, or delete your personal information.<br />-->
+    <!--    - Opt-out of any communications.<br /><br />-->
+
+    <!--    6. Changes to This Policy: We may update this Privacy Policy from time to time. Any changes will be posted within the app.<br /><br />-->
+
+    <!--    Contact Us: If you have any questions about this Privacy Policy, please contact us at (asmaaeltalawy2004@gmail.com).-->
+    <!-- " />-->
     <string name="privacy_policy">Privacy Policy</string>
     <string name="Downloaded_Books_are_Empty">Downloaded Books are Empty</string>
     <string name="Favorite_Books_are_Empty">Favorite Books are Empty</string>
