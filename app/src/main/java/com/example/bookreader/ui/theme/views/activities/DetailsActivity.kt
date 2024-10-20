@@ -64,7 +64,6 @@ class DetailsActivity : BaseActivity() {
     private lateinit var commentsAdapter: CommentsAdapter
     private val commentsList = mutableListOf<Comment>()
     private lateinit var comment: String
-    private lateinit var bookId: String
     private val timestamp = System.currentTimeMillis().toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,15 +74,21 @@ class DetailsActivity : BaseActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val position = intent.getIntExtra("ITEM_POSITION", 0)
         val type = intent.getIntExtra("ITEM_TYPE", 0)
-        val book = when (type) {
-            5 -> SharedData.DownloadedList[position]
-            4 -> SharedData.FavoritedList[position]
-            3 -> SharedData.searchResults[position]
-            2 -> SharedData.RecommendedBooks[position]
-            1 -> SharedData.RecentBooks[position]
-            0 -> SharedData.lastReadBook
-            else -> null
+        val book: LocalBook?
+        book = try {
+            when (type) {
+                5 -> SharedData.DownloadedList[position]
+                4 -> SharedData.FavoritedList[position]
+                3 -> SharedData.searchResults[position]
+                2 -> SharedData.RecommendedBooks[position]
+                1 -> SharedData.RecentBooks[position]
+                0 -> SharedData.lastReadBook
+                else -> null
+            }
+        } catch (e: Exception){
+            null
         }
+
         val id = book?.id ?: ""
         Log.d("DetailsActivity", "Received book is at position: $position")
         var isDownloaded: DownloadState

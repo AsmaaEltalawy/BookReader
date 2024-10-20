@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.theme.views.fragments.LoginFragment">
 
@@ -37,6 +38,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/primary_color"
             android:paddingVertical="16dp">
 
             <ProgressBar
@@ -58,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:drawableTint="@color/main_text"
                 android:background="@drawable/registeration_fields_bg"
                 android:drawableStart="@drawable/email_ic"
                 android:drawablePadding="12dp"
@@ -71,6 +74,7 @@
                 android:id="@+id/login_fragment_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableTint="@color/main_text"
                 android:layout_margin="16dp"
                 android:textSize="18sp"
                 android:background="@drawable/registeration_fields_bg"
@@ -100,7 +104,7 @@
                 android:layout_marginVertical="8dp"
                 android:text="@string/forget_password"
                 android:textSize="18sp"
-                android:textStyle="bold |italic"
+                android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/login_fragment_password"
                 app:layout_constraintTop_toBottomOf="@id/email_or_password_incorrect" />
 
@@ -111,6 +115,7 @@
                 android:layout_margin="8dp"
                 android:textSize="16sp"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/grey"
                 android:paddingHorizontal="48dp"
                 android:paddingVertical="16dp"
@@ -131,6 +136,7 @@
         android:layout_marginRight="280dp"
         android:adjustViewBounds="true"
         android:src="@drawable/shape1"
+        app:tint="@color/secondary_color"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.45"
@@ -142,6 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="77dp"
         android:layout_marginBottom="24dp"
+        app:tint="@color/secondary_color"
         android:adjustViewBounds="true"
         android:src="@drawable/shape2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,6 +161,7 @@
         android:layout_height="122dp"
         android:src="@drawable/shape4"
         android:adjustViewBounds="true"
+        app:tint="@color/primary_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 

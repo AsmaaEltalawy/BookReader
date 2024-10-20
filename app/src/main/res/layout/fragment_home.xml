@@ -202,6 +202,7 @@
                 tools:listitem="@layout/horizontal_book" />
             <ImageView
                 android:id="@+id/recentListError"
+                android:visibility="invisible"
                 android:layout_width="@dimen/match_constraints"
                 android:layout_height="150dp"
                 android:layout_margin="@dimen/margin_20"

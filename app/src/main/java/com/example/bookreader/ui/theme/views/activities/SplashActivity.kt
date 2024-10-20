@@ -3,34 +3,24 @@ package com.example.bookreader.ui.theme.views.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.bookreader.R
-import com.example.bookreader.databinding.ActivityRegisterBinding
+import com.example.bookreader.baseClass.BaseActivity
 import com.example.bookreader.databinding.ActivitySplashBinding
 import com.example.bookreader.ui.theme.mvi.splashmvi.SplashIntent
 import com.example.bookreader.ui.theme.mvi.splashmvi.SplashState
 import com.example.bookreader.ui.theme.viewmodels.SplashViewModel
 import com.example.bookreader.utils.Constant
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
