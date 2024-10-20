@@ -27,6 +27,9 @@ class DownloadFragment : Fragment(), BookOnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDownloadBinding.inflate(inflater, container, false)
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout?.setExpanded(false, false)
+        binding.downloadRecyclerView.isNestedScrollingEnabled = false
         return binding.root
     }
 
@@ -59,11 +62,6 @@ class DownloadFragment : Fragment(), BookOnClickListener {
 
         // Load downloaded books when the fragment is created
         loadDownloadedBooks()
-
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.appBarLayout)
-
-        // Collapse the AppBarLayout
-        appBarLayout?.setExpanded(false, false)
     }
 
     private fun loadDownloadedBooks() {

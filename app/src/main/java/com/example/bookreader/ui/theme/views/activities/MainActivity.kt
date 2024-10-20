@@ -39,6 +39,9 @@ class MainActivity : BaseActivity() {
         navController = fragHost.navController
         setupWithNavController(binding.BottomNavBar, navController)
 
+        // Handle intent to navigate to a specific fragment
+        handleNavigationFromIntent(intent)
+
         val toolbar = binding.materialToolbar
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
@@ -112,6 +115,27 @@ class MainActivity : BaseActivity() {
         }
     }
 */
+
+    // Handle intent navigation logic in a separate function
+    private fun handleNavigationFromIntent(intent: Intent?) {
+        intent?.getStringExtra("navigateTo")?.let { navigateTo ->
+            when (navigateTo) {
+                "ProfileFragment" -> {
+                    // Navigate to ProfileFragment
+                    navController.navigate(R.id.profile)
+                }
+                "UserProfileFragment" -> {
+                    val userId = intent.getStringExtra("userId")
+                    if (!userId.isNullOrEmpty()) {
+                        val bundle = Bundle().apply {
+                            putString("userId", userId)
+                        }
+                        navController.navigate(R.id.userProfileFragment, bundle)
+                    }
+                }
+            }
+        }
+    }
 
     private fun logout() {
         sharedPreference.edit().apply(){

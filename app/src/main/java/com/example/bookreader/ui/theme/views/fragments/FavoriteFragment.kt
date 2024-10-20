@@ -26,6 +26,9 @@ class FavoriteFragment : Fragment(), BookOnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout?.setExpanded(false, false)
+        binding.favoriteRecyclerView.isNestedScrollingEnabled = false
         return binding.root
     }
 
@@ -58,11 +61,6 @@ class FavoriteFragment : Fragment(), BookOnClickListener {
 
         // Fetch favorite books when fragment is opened
         favViewModel.getAllFavorites()
-
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.appBarLayout)
-
-        // Collapse the AppBarLayout
-        appBarLayout?.setExpanded(false, false)
     }
 
     // Handle click on a book

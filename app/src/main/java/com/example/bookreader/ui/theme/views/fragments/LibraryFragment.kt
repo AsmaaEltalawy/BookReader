@@ -56,6 +56,8 @@ class LibraryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        val appBarLayout = requireActivity().findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout.setExpanded(false, false)
        // appBarLayout.setBackgroundColor(resources.getColor(R.color.primary_color))
        // toolbar.setBackgroundColor(resources.getColor(R.color.primary_color))
     }

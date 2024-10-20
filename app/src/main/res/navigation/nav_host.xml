@@ -54,4 +54,8 @@
         android:name="com.example.bookreader.ui.theme.views.fragments.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.bookreader.ui.theme.views.fragments.UserProfileFragment"
+        android:label="UserProfileFragment" />
 </navigation>

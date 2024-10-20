@@ -2,6 +2,7 @@ package com.example.bookreader.adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookreader.data.models.Comment
 import com.example.bookreader.databinding.CommentItemBinding
+import com.example.bookreader.ui.theme.views.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -53,6 +55,23 @@ class CommentsAdapter(
             holder.binding.root.setOnLongClickListener {
                 Toast.makeText(context, "You can only delete your own comments", Toast.LENGTH_SHORT).show()
                 true
+            }
+        }
+        holder.binding.profileImg.setOnClickListener {
+
+            if (comment.uid == currentUserUid) {
+                // Navigate to ProfileFragment
+                val intent = Intent(context, MainActivity::class.java).apply {
+                    putExtra("navigateTo", "ProfileFragment")
+                }
+                context.startActivity(intent)
+            } else {
+                // Navigate to UserProfileFragment
+                val intent = Intent(context, MainActivity::class.java).apply {
+                    putExtra("navigateTo", "UserProfileFragment")
+                    putExtra("userId", comment.uid)  // Pass the user's ID for the UserProfileFragment
+                }
+                context.startActivity(intent)
             }
         }
     }

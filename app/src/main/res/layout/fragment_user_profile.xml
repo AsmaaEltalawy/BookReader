@@ -28,6 +28,17 @@
             android:layout_height="match_parent"
             tools:context=".ui.theme.views.fragments.ProfileFragment">
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat"
+                android:backgroundTint="@color/main_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="20dp"
+                android:layout_margin="10dp"
+                tools:ignore="ContentDescription" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImg"
                 android:layout_width="150dp"
@@ -53,82 +64,12 @@
                 app:layout_constraintStart_toStartOf="@id/profileImg"
                 app:layout_constraintTop_toBottomOf="@id/profileImg" />
 
-            <!-- Common Favorites and Downloads Section -->
-            <LinearLayout
-                android:id="@+id/favoritesDownloadsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="20dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/titleName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <!-- Favorites -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/favoritesNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textColor="@color/tertiary_text"
-                        android:textSize="26sp"
-                        tools:ignore="TextContrastCheck" />
-                    <TextView
-                        android:id="@+id/favoritesLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Favorites"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <!-- Downloads -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/downloadsNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textColor="@color/tertiary_text"
-                        android:textSize="26sp"
-                        tools:ignore="TextContrastCheck" />
-                    <TextView
-                        android:id="@+id/downloadsLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Downloads"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <!-- Current User Info (This section is only visible for logged-in users) -->
-
             <LinearLayout
                 android:id="@+id/currentUserInfoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/white_background"
                 android:orientation="vertical"
@@ -136,7 +77,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/favoritesDownloadsLayout">
+                app:layout_constraintTop_toBottomOf="@id/titleName">
 
                 <!-- Email -->
                 <LinearLayout
@@ -207,23 +148,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:background="@drawable/pink_background"
-                android:text="@string/Edit_Profile"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/currentUserInfoLayout"
-                app:layout_constraintVertical_bias="0.329" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
