@@ -50,7 +50,7 @@ class FavoriteFragment : Fragment(), BookOnClickListener {
                 binding.emptyStateTextView.visibility = View.GONE
                 binding.favoriteRecyclerView.visibility = View.VISIBLE
                 val count = favorites.size
-                binding.favoriteCountTextView.text = "Favorite Books: $count"
+                binding.favoriteCountTextView.text = getString(R.string.favoriteCounter, count)
                 binding.favoriteCountTextView.visibility = View.VISIBLE
                 favoriteAdapter.submitList(favorites)
             }

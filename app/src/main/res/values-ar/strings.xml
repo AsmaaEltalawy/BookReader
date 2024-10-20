@@ -109,6 +109,7 @@
     <string name="Downloads">التنزيلات</string>
     <string name="zero">٠</string>
     <string name="Favorites">المفضلة</string>
+    <string name="favorites">المفضلات</string>
     <string name="edit_password_content_description">وصف تعديل كلمة المرور</string>
     <string name="save_button_content_description">زر الحفظ</string>
     <string name="edit_email">تعديل البريد الإلكتروني</string>
@@ -122,4 +123,6 @@
     <string name="submit">إرسال</string>
     <string name="loading">جارٍ التحميل…</string>
     <string name="Logout">تسجيل الخروج</string>
+    <string name="downloadCounter">التنزيلات: %d</string>
+    <string name="favoriteCounter">المفضلات: %d</string>
 </resources>

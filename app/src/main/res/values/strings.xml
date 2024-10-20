@@ -131,6 +131,7 @@ proident</string>
     <string name="Downloads">Downloads</string>
     <string name="zero">0</string>
     <string name="Favorites">Favorite</string>
+    <string name="favorites">Favorites</string>
     <string name="edit_password_content_description">Edit password content description</string>
     <string name="save_button_content_description">Save button</string>
     <string name="edit_email">Edit email</string>
@@ -144,5 +145,7 @@ proident</string>
     <string name="submit">Submit</string>
     <string name="loading">Loading...</string>
     <string name="Logout">Logout</string>
+    <string name="downloadCounter">Downloaded Books: %d</string>
+    <string name="favoriteCounter">Favorite Books: %d</string>
 
 </resources>

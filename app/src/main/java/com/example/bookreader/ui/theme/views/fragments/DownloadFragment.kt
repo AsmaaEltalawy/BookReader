@@ -51,7 +51,7 @@ class DownloadFragment : Fragment(), BookOnClickListener {
                 binding.emptyStateTextView.visibility = View.GONE
                 binding.downloadRecyclerView.visibility = View.VISIBLE
                 val count = books.size
-                binding.downloadCountTextView.text = "Downloaded Books: $count" // Update text
+                binding.downloadCountTextView.text = getString(R.string.downloadCounter, count) // Update text
                 binding.downloadCountTextView.visibility = View.VISIBLE
                 downloadAdapter.submitList(books)
             }

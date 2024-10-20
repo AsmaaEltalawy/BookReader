@@ -197,9 +197,11 @@
                 android:paddingVertical="@dimen/padding_12"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recentListHintTV"
                 tools:listitem="@layout/horizontal_book" />
+
             <ImageView
                 android:id="@+id/recentListError"
                 android:visibility="invisible"
