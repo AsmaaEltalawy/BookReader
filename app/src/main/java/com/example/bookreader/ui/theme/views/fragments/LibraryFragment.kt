@@ -56,14 +56,14 @@ class LibraryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        appBarLayout.setBackgroundColor(resources.getColor(R.color.primary_color))
-        toolbar.setBackgroundColor(resources.getColor(R.color.primary_color))
+       // appBarLayout.setBackgroundColor(resources.getColor(R.color.primary_color))
+       // toolbar.setBackgroundColor(resources.getColor(R.color.primary_color))
     }
 
     override fun onPause() {
         super.onPause()
-        appBarLayout.setBackgroundColor(resources.getColor(R.color.theme))
-        toolbar.setBackgroundColor(resources.getColor(R.color.theme))
+       // appBarLayout.setBackgroundColor(resources.getColor(R.color.theme))
+       // toolbar.setBackgroundColor(resources.getColor(R.color.theme))
     }
 
 }
